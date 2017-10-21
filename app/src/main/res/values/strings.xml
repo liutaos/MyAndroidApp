@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="time_down">倒计时</string>
+    <string name="tv_title">网络连接客户端测试</string>
+    <string name="btn_link">连接服务器</string>
+    <string name="btn_close">断开连接</string>
+    <string name="btn_list">打开列表</string>
+</resources>
