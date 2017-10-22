@@ -6,11 +6,12 @@
 
 package com.example.zhijiansha.myapplication;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
-import com.example.zhijiansha.Entity.Entity;
+import com.example.zhijiansha.tools.Image;
+import com.example.zhijiansha.tools.ImageProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +20,11 @@ import java.util.List;
  * Created by zhijiansha on 2017-10-21.
  */
 
-public class ActivityListActivity extends Activity  {
+public class ActivityListActivity extends AppCompatActivity {
     private ListView mLv;
     private ActivityListAdapter mAdapter;
-    private Entity mEntity;
-    private List<Entity> mEntityList = new ArrayList<>();
+    private ImageProvider mImageProvider = new ImageProvider(this);
+    private List<Image> mImageList = new ArrayList<>();
 
 
     @Override
@@ -31,21 +32,22 @@ public class ActivityListActivity extends Activity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         initView();
-        initData();
     }
 
-    public void initView(){
-        mLv = findViewById(R.id.list_item);
-        mAdapter = new ActivityListAdapter(this,mEntityList);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+        mAdapter = new ActivityListAdapter(this, mImageList);
         mLv.setAdapter(mAdapter);
     }
 
-    public void initData(){
-        for (int i=0;i<1000;i++) {
-            mEntity = new Entity();
-            mEntity.setTvData("Test item "+(i+1));
-            mEntityList.add(mEntity);
-        }
+    public void initView() {
+        mLv = (ListView) findViewById(R.id.list_item);
+    }
+
+    public void initData() {
+        mImageList = mImageProvider.getList();
     }
 
 }

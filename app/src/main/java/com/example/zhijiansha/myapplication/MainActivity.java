@@ -1,21 +1,42 @@
 package com.example.zhijiansha.myapplication;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.zhijiansha.tools.PermissionsChecker;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
+
+@RuntimePermissions
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button mBtnLink;
     private Button mBtnClose;
     private Button mListViewBtn;
     private Socket socket;
+    private PermissionsChecker mPermissionsChecker;
+
+    // 所需的全部权限
+    static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.READ_EXTERNAL_STORAGE
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +44,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initView();
         SocketServers();
+        mPermissionsChecker = new PermissionsChecker(this);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //MainActivityPermissionsDispatcher.readExtrnalWithPermissionCheck(this);
+        // 缺少权限时, 进入权限配置页面
+        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+            MainActivityPermissionsDispatcher.readExtrnalWithPermissionCheck(this);
+        }
     }
 
     public void initView() {
@@ -34,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnLink.setVisibility(View.GONE);
         mBtnClose.setVisibility(View.GONE);
         mListViewBtn.setOnClickListener(this);
+
     }
 
     public void SocketServers() {
@@ -98,5 +132,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.setClass(MainActivity.this, ActivityListActivity.class);
                 startActivity(intent);
         }
+    }
+
+
+    @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+    void readExtrnal() {
+        //initView();
+    }
+
+
+    @OnShowRationale(Manifest.permission.READ_EXTERNAL_STORAGE)
+    void readShow(final PermissionRequest request) {
+        new AlertDialog.Builder(this).setMessage("").setPositiveButton("", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                request.proceed();
+            }
+        });
+    }
+
+    @OnPermissionDenied(Manifest.permission.READ_EXTERNAL_STORAGE)
+    void readDenied() {
+        Toast.makeText(this, "拒绝授权", Toast.LENGTH_LONG).show();
+        this.finish();
+    }
+
+    @OnNeverAskAgain(Manifest.permission.READ_EXTERNAL_STORAGE)
+    void readAskAgin() {
+        Toast.makeText(this, "拒绝授权不在询问", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+       MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 }

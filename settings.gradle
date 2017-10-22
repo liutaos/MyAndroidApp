@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':test-v13', ':sample', ':sample-kotlin', ':lint', ':processor', ':test', ':library'

@@ -23,7 +23,7 @@ public class AudioProvider implements AbstructProvider {
     }
 
     @Override
-    public List<?> getList() {
+    public List<Audio> getList() {
         List<Audio> list = null;
         if (context != null) {
             Cursor cursor = context.getContentResolver().query(

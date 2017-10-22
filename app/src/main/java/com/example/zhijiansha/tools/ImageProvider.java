@@ -22,7 +22,7 @@ public class ImageProvider implements AbstructProvider {
     }
 
     @Override
-    public List<?> getList() {
+    public List<Image> getList() {
         List<Image> list = null;
         if (context != null) {
             Cursor cursor = context.getContentResolver().query(

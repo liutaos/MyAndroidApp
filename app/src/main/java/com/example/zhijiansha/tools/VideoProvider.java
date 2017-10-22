@@ -21,7 +21,7 @@ public class VideoProvider implements AbstructProvider {
     }
 
     @Override
-    public List<?> getList() {
+    public List<Video> getList() {
         List<Video> list = null;
         if (context != null) {
             Cursor cursor = context.getContentResolver().query(
