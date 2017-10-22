@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 
 import com.example.zhijiansha.myapplication.about.AboutActivity;
 import com.example.zhijiansha.tools.PermissionsChecker;
+
+import java.util.Random;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -36,14 +39,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView();
         mPermissionsChecker = new PermissionsChecker(this);
+
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        initView();
         //MainActivityPermissionsDispatcher.readExtrnalWithPermissionCheck(this);
         // 缺少权限时, 进入权限配置页面
         if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
@@ -69,6 +73,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnSetings.setOnClickListener(this);
         mBtnAppInfo.setOnClickListener(this);
         mBtnAbout.setOnClickListener(this);
+        Random random = new Random();
+        int r = random.nextInt(256);
+        int g = random.nextInt(256);
+        int b = random.nextInt(256);
+        mBtnImage.setTextColor(Color.rgb(b,r,g));
+        mBtnImage.setBackgroundColor(Color.rgb(r,g,b));
+
+        mBtnMusic.setTextColor(Color.rgb(r,g,b));
+        mBtnMusic.setBackgroundColor(Color.rgb(b,r,g));
+
+        mBtnVideo.setTextColor(Color.rgb(b,g,r));
+        mBtnVideo.setBackgroundColor(Color.rgb(r,b,g));
+
+        mBtnAudio.setTextColor(Color.rgb(r,b,g));
+        mBtnAudio.setBackgroundColor(Color.rgb(b,g,r));
+
+        mBtnBook.setTextColor(Color.rgb(b,r,g));
+        mBtnBook.setBackgroundColor(Color.rgb(r,g,b));
+
+        mBtnSetings.setTextColor(Color.rgb(r,g,b));
+        mBtnSetings.setBackgroundColor(Color.rgb(b,r,g));
+
+        mBtnAppInfo.setTextColor(Color.rgb(b,g,r));
+        mBtnAppInfo.setBackgroundColor(Color.rgb(r,b,g));
+
+        mBtnAbout.setTextColor(Color.rgb(r,b,g));
+        mBtnAbout.setBackgroundColor(Color.rgb(b,g,r));
+
 
     }
 
