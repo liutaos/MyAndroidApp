@@ -1,9 +1,15 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">My TOOLS</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
     <string name="time_down">倒计时</string>
-    <string name="tv_title">网络连接客户端测试</string>
-    <string name="btn_link">连接服务器</string>
-    <string name="btn_close">断开连接</string>
-    <string name="btn_list">打开列表</string>
+    <string name="btn_image_text">图片</string>
+    <string name="btn_music_text">音乐</string>
+    <string name="btn_video_text">视频</string>
+    <string name="btn_audio_text">铃音</string>
+    <string name="btn_book_text">书籍</string>
+    <string name="btn_setings_text">设置</string>
+    <string name="btn_appinfo_text">应用</string>
+    <string name="btn_about_text">关于</string>
+    <string name="title_about_tv">关于本应用</string>
 </resources>

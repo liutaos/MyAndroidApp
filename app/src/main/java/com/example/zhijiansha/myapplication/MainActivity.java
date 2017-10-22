@@ -11,11 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.zhijiansha.myapplication.about.AboutActivity;
 import com.example.zhijiansha.tools.PermissionsChecker;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Socket;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -26,10 +23,7 @@ import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button mBtnLink;
-    private Button mBtnClose;
-    private Button mListViewBtn;
-    private Socket socket;
+    private Button mBtnImage, mBtnMusic, mBtnVideo, mBtnAudio, mBtnBook, mBtnSetings, mBtnAppInfo, mBtnAbout;
     private PermissionsChecker mPermissionsChecker;
 
     // 所需的全部权限
@@ -43,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        SocketServers();
         mPermissionsChecker = new PermissionsChecker(this);
 
     }
@@ -59,85 +52,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void initView() {
-        mBtnLink = (Button) findViewById(R.id.button_link);
-        mBtnClose = (Button) findViewById(R.id.button_close);
-        mListViewBtn = (Button) findViewById(R.id.btn_list);
-        mBtnLink.setOnClickListener(this);
-        mBtnClose.setOnClickListener(this);
-        mBtnLink.setVisibility(View.GONE);
-        mBtnClose.setVisibility(View.GONE);
-        mListViewBtn.setOnClickListener(this);
+        mBtnImage = (Button) findViewById(R.id.btn_image);
+        mBtnMusic = (Button) findViewById(R.id.btn_music);
+        mBtnVideo = (Button) findViewById(R.id.btn_video);
+        mBtnAudio = (Button) findViewById(R.id.btn_audio);
+        mBtnBook = (Button) findViewById(R.id.btn_book);
+        mBtnSetings = (Button) findViewById(R.id.btn_settings);
+        mBtnAppInfo = (Button) findViewById(R.id.btn_appinfo);
+        mBtnAbout = (Button) findViewById(R.id.btn_about);
+
+        mBtnImage.setOnClickListener(this);
+        mBtnMusic.setOnClickListener(this);
+        mBtnVideo.setOnClickListener(this);
+        mBtnAudio.setOnClickListener(this);
+        mBtnBook.setOnClickListener(this);
+        mBtnSetings.setOnClickListener(this);
+        mBtnAppInfo.setOnClickListener(this);
+        mBtnAbout.setOnClickListener(this);
 
     }
 
-    public void SocketServers() {
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                //创建Socket
-                try {
-                    socket = new Socket("192.168.0.101", 80);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent();
         switch (v.getId()) {
-            case R.id.button_link:
-                new Thread() {
-                    @Override
-                    public void run() {
-                        super.run();
-                        try {
-                            //向服务器发送消息
-                            //建立输出流
-                            if (socket != null) {
-                                OutputStream out = socket.getOutputStream();
-                                out.write("发送消息".getBytes("utf-8"));
-                                //关闭流
-                                out.close();
-                            } else {
-                                Toast.makeText(MainActivity.this, "连接失败！！", Toast.LENGTH_LONG).show();
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }.start();
-                break;
-            case R.id.button_close:
-                new Thread() {
-                    @Override
-                    public void run() {
-                        super.run();
-                        try {
-                            OutputStream out = socket.getOutputStream();
-                            out.write("断开连接".getBytes("utf-8"));
-                            out.close();
-                            //关闭Socket
-                            socket.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }.start();
-                break;
-            case R.id.btn_list:
-                Intent intent = new Intent();
+            case R.id.btn_image:
                 intent.setClass(MainActivity.this, ActivityListActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.btn_music:
+                break;
+            case R.id.btn_video:
+                //intent = new Intent();
+                //intent.setClass(MainActivity.this, ActivityListActivity.class);
+                //startActivity(intent);
+                break;
+            case R.id.btn_audio:
+                break;
+            case R.id.btn_book:
+                break;
+            case R.id.btn_settings:
+                break;
+            case R.id.btn_appinfo:
+                break;
+            case R.id.btn_about:
+                intent.setClass(MainActivity.this, AboutActivity.class);
+                startActivity(intent);
+                break;
         }
     }
 
 
     @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
     void readExtrnal() {
-        //initView();
+        Toast.makeText(this, "权限已获取到！！！", Toast.LENGTH_LONG).show();
     }
 
 
@@ -165,6 +134,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-       MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+        MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 }
