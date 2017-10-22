@@ -17,8 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.zhijiansha.Entity.Entity;
-import com.example.zhijiansha.tools.Image;
+import com.example.zhijiansha.Entity.Image;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ import java.util.List;
 
 public class ActivityListAdapter extends BaseAdapter {
 
-    private List<Entity> mEntity = new ArrayList<Entity>();
+    //private List<Entity> mEntity = new ArrayList<Entity>();
     private List<Image> mImage = new ArrayList<Image>();
 
     private Context context;

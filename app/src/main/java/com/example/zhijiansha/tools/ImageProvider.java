@@ -11,6 +11,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
 
+import com.example.zhijiansha.Entity.Image;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +31,7 @@ public class ImageProvider implements AbstructProvider {
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null,
                     null, null);
             if (cursor != null) {
-                list = new ArrayList<Image>();
+                list = new ArrayList<>();
                 while (cursor.moveToNext()) {
                     int id = cursor
                             .getInt(cursor

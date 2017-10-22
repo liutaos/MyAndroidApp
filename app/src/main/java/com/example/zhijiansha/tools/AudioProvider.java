@@ -11,6 +11,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
 
+import com.example.zhijiansha.Entity.Audio;
+
 import java.util.ArrayList;
 import java.util.List;
 

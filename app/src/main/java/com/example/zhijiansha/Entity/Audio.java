@@ -1,27 +1,27 @@
-
 /*
  * Copyright (c) 2017.
  * liutao
  * 版权所有
  */
 
-package com.example.zhijiansha.tools;
+package com.example.zhijiansha.Entity;
 
-public class Video {
+public class Audio {
+
     private int id;
     private String title;
     private String album;
     private String artist;
+    private String path;
     private String displayName;
     private String mimeType;
-    private String path;
-    private long size;
     private long duration;
+    private long size;
 
     /**
      *
      */
-    public Video() {
+    public Audio() {
         super();
     }
 
@@ -30,25 +30,27 @@ public class Video {
      * @param title
      * @param album
      * @param artist
+     * @param path
      * @param displayName
      * @param mimeType
-     * @param size
      * @param duration
+     * @param size
      */
-    public Video(int id, String title, String album, String artist,
-                 String displayName, String mimeType, String path, long size,
-                 long duration) {
+    public Audio(int id, String title, String album, String artist,
+                 String path, String displayName, String mimeType, long duration,
+                 long size) {
         super();
         this.id = id;
         this.title = title;
         this.album = album;
         this.artist = artist;
+        this.path = path;
         this.displayName = displayName;
         this.mimeType = mimeType;
-        this.path = path;
-        this.size = size;
         this.duration = duration;
+        this.size = size;
     }
+
 
     public int getId() {
         return id;
@@ -82,6 +84,14 @@ public class Video {
         this.artist = artist;
     }
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     public String getDisplayName() {
         return displayName;
     }
@@ -98,12 +108,12 @@ public class Video {
         this.mimeType = mimeType;
     }
 
-    public String getPath() {
-        return path;
+    public long getDuration() {
+        return duration;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setDuration(long duration) {
+        this.duration = duration;
     }
 
     public long getSize() {
@@ -112,14 +122,6 @@ public class Video {
 
     public void setSize(long size) {
         this.size = size;
-    }
-
-    public long getDuration() {
-        return duration;
-    }
-
-    public void setDuration(long duration) {
-        this.duration = duration;
     }
 
 }

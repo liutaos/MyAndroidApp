@@ -4,53 +4,38 @@
  * 版权所有
  */
 
-package com.example.zhijiansha.tools;
+package com.example.zhijiansha.Entity;
 
-public class Audio {
-
+public class Image {
     private int id;
     private String title;
-    private String album;
-    private String artist;
-    private String path;
     private String displayName;
     private String mimeType;
-    private long duration;
+    private String path;
     private long size;
 
-    /**
-     *
-     */
-    public Audio() {
+    public Image() {
         super();
     }
 
     /**
      * @param id
      * @param title
-     * @param album
-     * @param artist
-     * @param path
      * @param displayName
      * @param mimeType
-     * @param duration
+     * @param path
      * @param size
      */
-    public Audio(int id, String title, String album, String artist,
-                 String path, String displayName, String mimeType, long duration,
-                 long size) {
+    public Image(int id, String title, String displayName, String mimeType,
+                 String path, long size) {
         super();
         this.id = id;
         this.title = title;
-        this.album = album;
-        this.artist = artist;
-        this.path = path;
         this.displayName = displayName;
         this.mimeType = mimeType;
-        this.duration = duration;
+        this.path = path;
         this.size = size;
     }
-
 
     public int getId() {
         return id;
@@ -66,30 +51,6 @@ public class Audio {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getAlbum() {
-        return album;
-    }
-
-    public void setAlbum(String album) {
-        this.album = album;
-    }
-
-    public String getArtist() {
-        return artist;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 
     public String getDisplayName() {
@@ -108,12 +69,12 @@ public class Audio {
         this.mimeType = mimeType;
     }
 
-    public long getDuration() {
-        return duration;
+    public String getPath() {
+        return path;
     }
 
-    public void setDuration(long duration) {
-        this.duration = duration;
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public long getSize() {
