@@ -3,85 +3,104 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     android:orientation="vertical"
     tools:context="com.example.zhijiansha.myapplication.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_marginBottom="1px">
 
         <Button
             android:id="@+id/btn_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="1px"
             android:layout_weight="1"
             android:text="@string/btn_image_text"
             android:textSize="40sp" />
+
 
         <Button
             android:id="@+id/btn_music"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="1px"
             android:layout_weight="1"
             android:text="@string/btn_music_text"
             android:textSize="40sp" />
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_marginTop="1px"
+        android:layout_marginBottom="1px">
 
         <Button
             android:id="@+id/btn_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="1px"
             android:layout_weight="1"
             android:text="@string/btn_video_text"
             android:textSize="40sp" />
+
 
         <Button
             android:id="@+id/btn_audio"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="1px"
             android:layout_weight="1"
             android:text="@string/btn_audio_text"
             android:textSize="40sp" />
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_marginTop="1px"
+        android:layout_marginBottom="1px">
 
         <Button
             android:id="@+id/btn_book"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="1px"
             android:layout_weight="1"
             android:text="@string/btn_book_text"
             android:textSize="40sp" />
+
 
         <Button
             android:id="@+id/btn_settings"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="1px"
             android:layout_weight="1"
             android:text="@string/btn_setings_text"
-            android:textSize="40sp"
-            />
+            android:textSize="40sp" />
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:layout_marginTop="1px">
 
         <Button
             android:id="@+id/btn_appinfo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginRight="1px"
             android:layout_weight="1"
             android:text="@string/btn_appinfo_text"
             android:textSize="40sp" />
@@ -90,6 +109,7 @@
             android:id="@+id/btn_about"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="1px"
             android:layout_weight="1"
             android:text="@string/btn_about_text"
             android:textSize="40sp" />

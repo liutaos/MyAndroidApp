@@ -1,13 +1,13 @@
 package com.example.zhijiansha.myapplication;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -25,7 +25,7 @@ import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener {
     private Button mBtnImage, mBtnMusic, mBtnVideo, mBtnAudio, mBtnBook, mBtnSetings, mBtnAppInfo, mBtnAbout;
     private PermissionsChecker mPermissionsChecker;
 
@@ -40,14 +40,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mPermissionsChecker = new PermissionsChecker(this);
-
-
+        initView();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initView();
+        resumeView();
         //MainActivityPermissionsDispatcher.readExtrnalWithPermissionCheck(this);
         // 缺少权限时, 进入权限配置页面
         if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
@@ -73,10 +72,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnSetings.setOnClickListener(this);
         mBtnAppInfo.setOnClickListener(this);
         mBtnAbout.setOnClickListener(this);
+    }
+
+    public void resumeView(){
         Random random = new Random();
         int r = random.nextInt(256);
         int g = random.nextInt(256);
         int b = random.nextInt(256);
+
         mBtnImage.setTextColor(Color.rgb(b,r,g));
         mBtnImage.setBackgroundColor(Color.rgb(r,g,b));
 
@@ -101,9 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBtnAbout.setTextColor(Color.rgb(r,b,g));
         mBtnAbout.setBackgroundColor(Color.rgb(b,g,r));
 
-
     }
-
 
     @Override
     public void onClick(View v) {
