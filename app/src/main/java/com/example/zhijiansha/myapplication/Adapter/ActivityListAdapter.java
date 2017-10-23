@@ -4,7 +4,7 @@
  * 版权所有
  */
 
-package com.example.zhijiansha.myapplication;
+package com.example.zhijiansha.myapplication.Adapter;
 
 import android.content.Context;
 import android.net.Uri;
@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.zhijiansha.Entity.Image;
+import com.example.zhijiansha.myapplication.R;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class ActivityListAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.list_item, null);
             convertView.setTag(new ViewHolder(convertView));
         }
-        Log.i("liutao"," ====getView()==="+getItem(position));
+
         initializeViews(getItem(position), (ViewHolder) convertView.getTag());
         return convertView;
     }
@@ -70,7 +71,6 @@ public class ActivityListAdapter extends BaseAdapter {
     private void initializeViews(Object object, ViewHolder holder) {
         //TODO implement
         final Image mImage = (Image) object;
-        Log.i("liutao","====initializeViews==="+mImage.getTitle());
         holder.mHolderTv.setText(mImage.getTitle());
         holder.mHolderTv.setOnClickListener(new View.OnClickListener() {
             @Override

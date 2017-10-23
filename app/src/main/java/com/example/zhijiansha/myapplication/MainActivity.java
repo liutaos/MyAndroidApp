@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.zhijiansha.myapplication.about.AboutActivity;
+import com.example.zhijiansha.myapplication.playerlist.PlayerListActivity;
 import com.example.zhijiansha.tools.PermissionsChecker;
 
 import java.util.Random;
@@ -55,14 +56,14 @@ public class MainActivity extends Activity implements View.OnClickListener {
     }
 
     public void initView() {
-        mBtnImage = (Button) findViewById(R.id.btn_image);
-        mBtnMusic = (Button) findViewById(R.id.btn_music);
-        mBtnVideo = (Button) findViewById(R.id.btn_video);
-        mBtnAudio = (Button) findViewById(R.id.btn_audio);
-        mBtnBook = (Button) findViewById(R.id.btn_book);
-        mBtnSetings = (Button) findViewById(R.id.btn_settings);
-        mBtnAppInfo = (Button) findViewById(R.id.btn_appinfo);
-        mBtnAbout = (Button) findViewById(R.id.btn_about);
+        mBtnImage = findViewById(R.id.btn_image);
+        mBtnMusic = findViewById(R.id.btn_music);
+        mBtnVideo = findViewById(R.id.btn_video);
+        mBtnAudio = findViewById(R.id.btn_audio);
+        mBtnBook = findViewById(R.id.btn_book);
+        mBtnSetings = findViewById(R.id.btn_settings);
+        mBtnAppInfo = findViewById(R.id.btn_appinfo);
+        mBtnAbout = findViewById(R.id.btn_about);
 
         mBtnImage.setOnClickListener(this);
         mBtnMusic.setOnClickListener(this);
@@ -74,35 +75,38 @@ public class MainActivity extends Activity implements View.OnClickListener {
         mBtnAbout.setOnClickListener(this);
     }
 
-    public void resumeView(){
+    /**
+     * 设置 随机颜色值
+     */
+    public void resumeView() {
         Random random = new Random();
         int r = random.nextInt(256);
         int g = random.nextInt(256);
         int b = random.nextInt(256);
 
-        mBtnImage.setTextColor(Color.rgb(b,r,g));
-        mBtnImage.setBackgroundColor(Color.rgb(r,g,b));
+        mBtnImage.setTextColor(Color.rgb(b, r, g));
+        mBtnImage.setBackgroundColor(Color.rgb(r, g, b));
 
-        mBtnMusic.setTextColor(Color.rgb(r,g,b));
-        mBtnMusic.setBackgroundColor(Color.rgb(b,r,g));
+        mBtnMusic.setTextColor(Color.rgb(r, g, b));
+        mBtnMusic.setBackgroundColor(Color.rgb(b, r, g));
 
-        mBtnVideo.setTextColor(Color.rgb(b,g,r));
-        mBtnVideo.setBackgroundColor(Color.rgb(r,b,g));
+        mBtnVideo.setTextColor(Color.rgb(b, g, r));
+        mBtnVideo.setBackgroundColor(Color.rgb(r, b, g));
 
-        mBtnAudio.setTextColor(Color.rgb(r,b,g));
-        mBtnAudio.setBackgroundColor(Color.rgb(b,g,r));
+        mBtnAudio.setTextColor(Color.rgb(r, b, g));
+        mBtnAudio.setBackgroundColor(Color.rgb(b, g, r));
 
-        mBtnBook.setTextColor(Color.rgb(b,r,g));
-        mBtnBook.setBackgroundColor(Color.rgb(r,g,b));
+        mBtnBook.setTextColor(Color.rgb(b, r, g));
+        mBtnBook.setBackgroundColor(Color.rgb(r, g, b));
 
-        mBtnSetings.setTextColor(Color.rgb(r,g,b));
-        mBtnSetings.setBackgroundColor(Color.rgb(b,r,g));
+        mBtnSetings.setTextColor(Color.rgb(r, g, b));
+        mBtnSetings.setBackgroundColor(Color.rgb(b, r, g));
 
-        mBtnAppInfo.setTextColor(Color.rgb(b,g,r));
-        mBtnAppInfo.setBackgroundColor(Color.rgb(r,b,g));
+        mBtnAppInfo.setTextColor(Color.rgb(b, g, r));
+        mBtnAppInfo.setBackgroundColor(Color.rgb(r, b, g));
 
-        mBtnAbout.setTextColor(Color.rgb(r,b,g));
-        mBtnAbout.setBackgroundColor(Color.rgb(b,g,r));
+        mBtnAbout.setTextColor(Color.rgb(r, b, g));
+        mBtnAbout.setBackgroundColor(Color.rgb(b, g, r));
 
     }
 
@@ -115,13 +119,22 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.btn_music:
+                intent = new Intent();
+                intent.setClass(MainActivity.this, PlayerListActivity.class);
+                intent.setAction("MUSIC");
+                startActivity(intent);
                 break;
             case R.id.btn_video:
-                //intent = new Intent();
-                //intent.setClass(MainActivity.this, ActivityListActivity.class);
-                //startActivity(intent);
+                intent = new Intent();
+                intent.setClass(MainActivity.this, PlayerListActivity.class);
+                intent.setAction("VIDEO");
+                startActivity(intent);
                 break;
             case R.id.btn_audio:
+                intent = new Intent();
+                intent.setClass(MainActivity.this, PlayerListActivity.class);
+                intent.setAction("AUDIO");
+                startActivity(intent);
                 break;
             case R.id.btn_book:
                 break;

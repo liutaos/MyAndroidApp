@@ -22,4 +22,6 @@
         emali:liutaos@qq.com
     "
     </string>
+    <string name="title_activity_player_list">PlayerListActivity</string>
+    <string name="action_settings">Settings</string>
 </resources>

@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import com.example.zhijiansha.Entity.Image;
+import com.example.zhijiansha.myapplication.Adapter.ActivityListAdapter;
 import com.example.zhijiansha.tools.ImageProvider;
 
 import java.util.ArrayList;

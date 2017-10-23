@@ -19,9 +19,12 @@ import java.util.List;
 public class AudioProvider implements AbstructProvider {
 
     private Context context;
+    private static String mStr;
 
-    public AudioProvider(Context context) {
+    public AudioProvider(Context context,String str) {
         this.context = context;
+        mStr = str;
+
     }
 
     @Override
@@ -60,9 +63,17 @@ public class AudioProvider implements AbstructProvider {
                     long size = cursor
                             .getLong(cursor
                                     .getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE));
-                    Audio audio = new Audio(id, title, album, artist, path,
-                            displayName, mimeType, duration, size);
-                    list.add(audio);
+
+                    if((duration/1000/60) >1 && mStr.equals("MUSIC")) {
+                        Audio audio = new Audio(id, title, album, artist, path,
+                                displayName, mimeType, duration, size);
+                        list.add(audio);
+                    }
+                    if((duration/1000/60) < 1 && mStr.equals("AUDIO")) {
+                        Audio audio = new Audio(id, title, album, artist, path,
+                                displayName, mimeType, duration, size);
+                        list.add(audio);
+                    }
                 }
                 cursor.close();
             }

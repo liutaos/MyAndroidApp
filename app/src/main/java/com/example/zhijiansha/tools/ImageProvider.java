@@ -51,9 +51,9 @@ public class ImageProvider implements AbstructProvider {
                     long size = cursor
                             .getLong(cursor
                                     .getColumnIndexOrThrow(MediaStore.Images.Media.SIZE));
-                    Image audio = new Image(id, title, displayName, mimeType,
+                    Image image = new Image(id, title, displayName, mimeType,
                             path, size);
-                    list.add(audio);
+                    list.add(image);
                 }
                 cursor.close();
             }
