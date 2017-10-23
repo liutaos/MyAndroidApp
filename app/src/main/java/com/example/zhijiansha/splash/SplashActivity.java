@@ -87,10 +87,9 @@ public class SplashActivity extends Activity {
                     Log.i("liutao", "=========runnable==" + recLen);
                     mTVTime.setText((recLen - 1) + "S");
                     //setBackgroundColor旧的写法
-                    //mSplashLayout.setBackgroundColor(getResources().getColor(colorID[recLen - 1]));
-                    //setBackgroundColor新的写法
-                    mSplashLayout.setBackgroundColor(getColor(colorID[recLen - 1]));
-
+                    mSplashLayout.setBackgroundColor(getResources().getColor(colorID[recLen - 1]));
+                    //setBackgroundColor新的写法(android L 报错)
+                    //mSplashLayout.setBackgroundColor(getColor(colorID[recLen - 1]));
                     handler.postDelayed(this, 1000);
                     recLen--;
                 } else {

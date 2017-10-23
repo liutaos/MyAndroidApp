@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -40,7 +41,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mPermissionsChecker = new PermissionsChecker(this);
+        if (Build.VERSION.SDK_INT >= 23) {
+            mPermissionsChecker = new PermissionsChecker(this);
+        }
         initView();
     }
 
@@ -50,7 +53,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         resumeView();
         //MainActivityPermissionsDispatcher.readExtrnalWithPermissionCheck(this);
         // 缺少权限时, 进入权限配置页面
-        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+        if (Build.VERSION.SDK_INT >= 23 && mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
             MainActivityPermissionsDispatcher.readExtrnalWithPermissionCheck(this);
         }
     }
