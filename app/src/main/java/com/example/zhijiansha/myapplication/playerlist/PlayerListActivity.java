@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.zhijiansha.Entity.Audio;
 import com.example.zhijiansha.Entity.Video;
@@ -46,18 +47,34 @@ public class PlayerListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mIntent = this.getIntent();
-        initData();
-        initView();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment, new PlayerListActivityFragment()).commit();
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+        initView();
+    }
+
     public void initView() {
+        TextView titleTV = (TextView) findViewById(R.id.title_toolbar);
+        if (mIntent.getAction().equals(mActionVideo)){
+            titleTV.setText(this.getString(R.string.btn_video_text));
+        }
+        if (mIntent.getAction().equals(mActionAudio)){
+            titleTV.setText(this.getString(R.string.btn_audio_text));
+        }
+
+        if (mIntent.getAction().equals(mActionMusic)){
+            titleTV.setText(this.getString(R.string.btn_music_text));
+        }
 
         mPlayerList = (ListView) findViewById(R.id.player_list);
         if (mIntent.getAction().equals(mActionVideo)) {
-            Log.i("liutao", "====initView: "+mActionVideo);
+            Log.i("liutao", "====initView: " + mActionVideo);
             mVideoPlayerAdapter = new VideoPlayerListAdapter(this, mVideo);
             mPlayerList.setAdapter(mVideoPlayerAdapter);
         } else {
@@ -75,7 +92,7 @@ public class PlayerListActivity extends AppCompatActivity {
         } else {
             if (mIntent.getAction().equals(mActionAudio)) {
                 mAudioProvider = new AudioProvider(this, mActionAudio);
-            } else if(mIntent.getAction().equals(mActionMusic)) {
+            } else if (mIntent.getAction().equals(mActionMusic)) {
                 mAudioProvider = new AudioProvider(this, mActionMusic);
             }
             mAudio = mAudioProvider.getList();
