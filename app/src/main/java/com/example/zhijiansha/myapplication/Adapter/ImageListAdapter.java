@@ -7,15 +7,16 @@
 package com.example.zhijiansha.myapplication.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.zhijiansha.Entity.Image;
 import com.example.zhijiansha.myapplication.R;
@@ -28,15 +29,14 @@ import java.util.List;
  * Created by zhijiansha on 2017-10-21.
  */
 
-public class ActivityListAdapter extends BaseAdapter {
+public class ImageListAdapter extends BaseAdapter {
 
-    //private List<Entity> mEntity = new ArrayList<Entity>();
     private List<Image> mImage = new ArrayList<Image>();
 
     private Context context;
     private LayoutInflater layoutInflater;
 
-    public ActivityListAdapter(Context context, List<Image> mImage) {
+    public ImageListAdapter(Context context, List<Image> mImage) {
         this.context = context;
         this.mImage = mImage;
         this.layoutInflater = LayoutInflater.from(context);
@@ -60,7 +60,7 @@ public class ActivityListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.list_item, null);
+            convertView = layoutInflater.inflate(R.layout.item_player_list_layout, null);
             convertView.setTag(new ViewHolder(convertView));
         }
 
@@ -75,20 +75,30 @@ public class ActivityListAdapter extends BaseAdapter {
         holder.mHolderTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"ITEM 响应 "+mImage.getSize(),Toast.LENGTH_LONG).show();
+                Intent intent;
+                Uri pictureUri;
+                File pictureFile = new File(mImage.getPath());
+                intent = new Intent();
+                //intent.setAction(Intent.ACTION_VIEW);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    Log.i("liutao", "==pictureFile=======" + pictureFile.toString());
+                    pictureUri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileProvider", pictureFile);
+                    intent.setDataAndType(pictureUri, "image/*");
+                } else {
+                    intent.setDataAndType(Uri.fromFile(pictureFile), "image/*");
+                }
+                context.startActivity(intent);
             }
         });
-        holder.mImageView.setImageURI(Uri.fromFile(new File(mImage.getPath())));
     }
 
     protected class ViewHolder {
 
         public TextView mHolderTv;
-        public ImageView mImageView;
 
         public ViewHolder(View view) {
-            mHolderTv = view.findViewById(R.id.list_tv_item);
-            mImageView = view.findViewById(R.id.item_icon);
+            mHolderTv = view.findViewById(R.id.player_tv_title);
         }
     }
 }

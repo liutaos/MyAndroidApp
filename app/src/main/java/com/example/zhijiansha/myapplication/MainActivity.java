@@ -32,8 +32,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
     private PermissionsChecker mPermissionsChecker;
 
     // 所需的全部权限
-    static final String[] PERMISSIONS = new String[]{
-            Manifest.permission.READ_EXTERNAL_STORAGE
+    private static final String[] PERMISSIONS = new String[]{
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
 
@@ -44,19 +45,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (Build.VERSION.SDK_INT >= 23) {
             mPermissionsChecker = new PermissionsChecker(this);
         }
-        initView();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        resumeView();
-        //MainActivityPermissionsDispatcher.readExtrnalWithPermissionCheck(this);
+
         // 缺少权限时, 进入权限配置页面
         if (Build.VERSION.SDK_INT >= 23 && mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
             MainActivityPermissionsDispatcher.readExtrnalWithPermissionCheck(this);
         }
+        initView();
+        resumeView();
     }
+
 
     public void initView() {
         mBtnImage = findViewById(R.id.btn_image);
@@ -118,23 +121,21 @@ public class MainActivity extends Activity implements View.OnClickListener {
         Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.btn_image:
-                intent.setClass(MainActivity.this, ActivityListActivity.class);
+                intent.setClass(MainActivity.this, PlayerListActivity.class);
+                intent.setAction("IMAGE");
                 startActivity(intent);
                 break;
             case R.id.btn_music:
-                intent = new Intent();
                 intent.setClass(MainActivity.this, PlayerListActivity.class);
                 intent.setAction("MUSIC");
                 startActivity(intent);
                 break;
             case R.id.btn_video:
-                intent = new Intent();
                 intent.setClass(MainActivity.this, PlayerListActivity.class);
                 intent.setAction("VIDEO");
                 startActivity(intent);
                 break;
             case R.id.btn_audio:
-                intent = new Intent();
                 intent.setClass(MainActivity.this, PlayerListActivity.class);
                 intent.setAction("AUDIO");
                 startActivity(intent);
@@ -152,14 +153,18 @@ public class MainActivity extends Activity implements View.OnClickListener {
         }
     }
 
-
-    @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+    @NeedsPermission(value = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, maxSdkVersion = 24)
     void readExtrnal() {
         Toast.makeText(this, "权限已获取到！！！", Toast.LENGTH_LONG).show();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+    }
 
-    @OnShowRationale(Manifest.permission.READ_EXTERNAL_STORAGE)
+    @OnShowRationale({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void readShow(final PermissionRequest request) {
         new AlertDialog.Builder(this).setMessage("").setPositiveButton("", new DialogInterface.OnClickListener() {
             @Override
@@ -169,20 +174,16 @@ public class MainActivity extends Activity implements View.OnClickListener {
         });
     }
 
-    @OnPermissionDenied(Manifest.permission.READ_EXTERNAL_STORAGE)
+    @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     void readDenied() {
         Toast.makeText(this, "拒绝授权", Toast.LENGTH_LONG).show();
         this.finish();
     }
 
-    @OnNeverAskAgain(Manifest.permission.READ_EXTERNAL_STORAGE)
-    void readAskAgin() {
+    @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    void readAgain() {
         Toast.makeText(this, "拒绝授权不在询问", Toast.LENGTH_LONG).show();
+        this.finish();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
-    }
 }

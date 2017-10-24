@@ -7,7 +7,6 @@
 package com.example.zhijiansha.myapplication.Adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,7 +61,6 @@ public class MusicAudioPlayerListAdapter extends BaseAdapter {
         //TODO implement
         final Audio mAudio = object;
         holder.mHolderTv.setText(mAudio.getTitle());
-        Log.i("liutao","===MediaStore duration ==="+mAudio.getDuration());
     }
 
     protected class ViewHolder {
