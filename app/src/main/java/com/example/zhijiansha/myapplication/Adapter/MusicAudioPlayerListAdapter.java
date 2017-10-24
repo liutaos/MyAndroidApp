@@ -7,6 +7,9 @@
 package com.example.zhijiansha.myapplication.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +18,9 @@ import android.widget.TextView;
 
 import com.example.zhijiansha.Entity.Audio;
 import com.example.zhijiansha.myapplication.R;
+import com.example.zhijiansha.tools.FileUriTools;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +66,24 @@ public class MusicAudioPlayerListAdapter extends BaseAdapter {
         //TODO implement
         final Audio mAudio = object;
         holder.mHolderTv.setText(mAudio.getTitle());
+        holder.mHolderTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                Uri pictureUri;
+                File audioFile = new File(mAudio.getPath());
+                intent = new Intent();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    pictureUri=new FileUriTools().getFileUriTools(context,audioFile);
+                    intent.setDataAndType(pictureUri, "audio/*");
+                } else {
+                    intent.setDataAndType(Uri.fromFile(audioFile), "audio/*");
+                }
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     protected class ViewHolder {
@@ -68,6 +91,7 @@ public class MusicAudioPlayerListAdapter extends BaseAdapter {
 
         public ViewHolder(View view) {
             mHolderTv = view.findViewById(R.id.player_tv_title);
+            mHolderTv.setTextColor(context.getResources().getColor(R.color.item_title_color));
         }
     }
 }

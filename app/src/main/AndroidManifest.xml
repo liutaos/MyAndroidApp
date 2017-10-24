@@ -40,7 +40,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="image/*" />
+                <data android:mimeType="image/*||audio/*||video/*" />
             </intent-filter>
         </activity>
         <!--FileProvider共享文件-->

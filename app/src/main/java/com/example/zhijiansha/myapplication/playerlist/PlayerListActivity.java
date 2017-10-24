@@ -96,7 +96,14 @@ public class PlayerListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.font_left));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mIntent = this.getIntent();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment, new PlayerListActivityFragment()).commit();
@@ -142,7 +149,7 @@ public class PlayerListActivity extends AppCompatActivity {
         }
 
         mPlayerList = (ListView) findViewById(R.id.player_list);
-
+        mPlayerList.setBackgroundColor(getResources().getColor(R.color.item_bg_color));
         if (mIntent.getAction().equals(mActionImage)) {
             mImageAdapter = new ImageListAdapter(this, mImage);
             mPlayerList.setAdapter(mImageAdapter);
