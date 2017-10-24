@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.FileProvider;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +81,6 @@ public class ImageListAdapter extends BaseAdapter {
                 //intent.setAction(Intent.ACTION_VIEW);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    Log.i("liutao", "==pictureFile=======" + pictureFile.toString());
                     pictureUri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileProvider", pictureFile);
                     intent.setDataAndType(pictureUri, "image/*");
                 } else {

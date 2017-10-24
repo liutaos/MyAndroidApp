@@ -36,21 +36,41 @@ import java.util.List;
 
 public class PlayerListActivity extends AppCompatActivity {
     private ListView mPlayerList;
-
+    /**
+     * 图片列表适配器
+     *
+     * @author zhijiansha
+     * @time 2017-10-24 19:42
+     */
     private ImageListAdapter mImageAdapter;
+
+    /**
+     * 音乐或者铃声列表适配器
+     *
+     * @author zhijiansha
+     * @time 2017-10-24 19:42
+     */
     private MusicAudioPlayerListAdapter mPlayerAdapter;
+
+    /**
+     * 视频列表适配器
+     *
+     * @author zhijiansha
+     * @time 2017-10-24 19:42
+     */
     private VideoPlayerListAdapter mVideoPlayerAdapter;
 
+    //相关的provider
     private ImageProvider mImageProvider;
     private AudioProvider mAudioProvider;
     private VideoProvider mVideoProvider;
-
+    //相关的对象集合
     private List<Image> mImage = new ArrayList<>();
     private List<Audio> mAudio = new ArrayList<>();
     private List<Video> mVideo = new ArrayList<>();
 
     private Intent mIntent;
-
+    //相关的ACTION
     private static final String mActionImage = "IMAGE";
     private static final String mActionAudio = "AUDIO";
     private static final String mActionMusic = "MUSIC";
@@ -68,8 +88,8 @@ public class PlayerListActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 23) {
             mPermissionsChecker = new PermissionsChecker(this);
         }
-        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)){
-            Toast.makeText(this,"请赋予权限后启动！！",Toast.LENGTH_LONG).show();
+        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+            Toast.makeText(this, "请赋予权限后启动！！", Toast.LENGTH_LONG).show();
             this.finish();
 
         }
@@ -97,6 +117,12 @@ public class PlayerListActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 初始化视图
+     *
+     * @author zhijiansha
+     * @time 2017-10-24 19:37
+     */
     public void initView() {
         TextView titleTV = (TextView) findViewById(R.id.title_toolbar);
         if (mIntent.getAction().equals(mActionImage)) {
@@ -127,12 +153,17 @@ public class PlayerListActivity extends AppCompatActivity {
             mPlayerList.setAdapter(mPlayerAdapter);
         }
         if (mIntent.getAction().equals(mActionVideo)) {
-            Log.i("liutao", "====initView: " + mActionVideo);
             mVideoPlayerAdapter = new VideoPlayerListAdapter(this, mVideo);
             mPlayerList.setAdapter(mVideoPlayerAdapter);
         }
     }
 
+    /**
+     * 初始化数据
+     *
+     * @author zhijiansha
+     * @time 2017-10-24 19:37
+     */
     public void initData() {
         if (mIntent.getAction().equals(mActionImage)) {
             mImageProvider = new ImageProvider(this);

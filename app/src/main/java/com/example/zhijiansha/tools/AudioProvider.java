@@ -19,9 +19,15 @@ import java.util.List;
 public class AudioProvider implements AbstructProvider {
 
     private Context context;
+    /**
+     * 筛选  音乐或者铃声
+     *
+     * @author zhijiansha
+     * @time 2017-10-24 19:38
+     */
     private static String mStr;
 
-    public AudioProvider(Context context,String str) {
+    public AudioProvider(Context context, String str) {
         this.context = context;
         mStr = str;
 
@@ -64,12 +70,12 @@ public class AudioProvider implements AbstructProvider {
                             .getLong(cursor
                                     .getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE));
 
-                    if((duration/1000/60) >1 && mStr.equals("MUSIC")) {
+                    if ((duration / 1000 / 60) > 1 && mStr.equals("MUSIC")) {
                         Audio audio = new Audio(id, title, album, artist, path,
                                 displayName, mimeType, duration, size);
                         list.add(audio);
                     }
-                    if((duration/1000/60) < 1 && mStr.equals("AUDIO")) {
+                    if ((duration / 1000 / 60) < 1 && mStr.equals("AUDIO")) {
                         Audio audio = new Audio(id, title, album, artist, path,
                                 displayName, mimeType, duration, size);
                         list.add(audio);

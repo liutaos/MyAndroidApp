@@ -26,12 +26,32 @@ import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
+/**
+ *
+ */
 @RuntimePermissions
 public class MainActivity extends Activity implements View.OnClickListener {
+    /**
+     * 八个功能按钮
+     *
+     * @author zhijiansha
+     * @time 2017-10-24 19:40
+     */
     private Button mBtnImage, mBtnMusic, mBtnVideo, mBtnAudio, mBtnBook, mBtnSetings, mBtnAppInfo, mBtnAbout;
+    /**
+     * 判断是否获取到权限
+     *
+     * @author zhijiansha
+     * @time 2017-10-24 19:40
+     */
     private PermissionsChecker mPermissionsChecker;
 
-    // 所需的全部权限
+    /**
+     * 所需的全部权限
+     *
+     * @author zhijiansha
+     * @time 2017-10-24 19:37
+     */
     private static final String[] PERMISSIONS = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -60,7 +80,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         resumeView();
     }
 
-
+    /**
+     * 初始化视图
+     *
+     * @author zhijiansha
+     * @time 2017-10-24 19:36
+     */
     public void initView() {
         mBtnImage = findViewById(R.id.btn_image);
         mBtnMusic = findViewById(R.id.btn_music);
@@ -83,6 +108,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
     /**
      * 设置 随机颜色值
+     *
+     * @author zhijiansha
+     * @time 2017-10-24 19:36
      */
     public void resumeView() {
         Random random = new Random();
@@ -158,6 +186,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
         Toast.makeText(this, "权限已获取到！！！", Toast.LENGTH_LONG).show();
     }
 
+    /**
+     * 权限申请
+     *
+     * @author zhijiansha
+     * @time 2017-10-24 19:41
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
