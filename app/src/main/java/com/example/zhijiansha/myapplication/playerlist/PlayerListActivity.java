@@ -95,8 +95,12 @@ public class PlayerListActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_player_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        //获取返回按钮
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //不显示默认的title
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.font_left));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

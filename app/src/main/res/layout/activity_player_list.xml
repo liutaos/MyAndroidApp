@@ -20,14 +20,16 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
             android:background="@android:drawable/title_bar"
             app:popupTheme="@style/AppTheme.PopupOverlay" >
             <TextView
                 android:id="@+id/title_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
                 android:textSize="30sp"/>
         </android.support.v7.widget.Toolbar>
 
