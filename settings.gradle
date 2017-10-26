@@ -1,1 +1,1 @@
-include ':app', ':test-v13', ':sample', ':sample-kotlin', ':lint', ':processor', ':test', ':library'
+include ':app', ':test-v13', ':sample', ':sample-kotlin', ':lint', ':processor', ':test', ':library', ':ijkplayer-java'

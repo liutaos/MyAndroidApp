@@ -16,11 +16,27 @@
     <string name="about_string" translatable="false">"
 
 
+
         本应用为简单的本地工具app；
+        实现了本地的媒体库查询，并显示到对应的界面中；
+        图片查询并显示列表；
+        音乐铃声查询并显示列表；
+        视频查询并显示列表，点击一项可自动播放；
+
+
+
+
+
+        视频播放引用了：ijkplayer
+        权限适配引用了：permissionsdispatcher
+
+
+
+
 
         创作：zhijiansha
-        emali:liutaos@qq.com
-    "
+        E-mail:liutaos@qq.com
+        "
     </string>
     <string name="title_activity_player_list">PlayerListActivity</string>
     <string name="action_settings">Settings</string>

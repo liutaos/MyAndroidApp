@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,10 @@ import android.widget.TextView;
 
 import com.example.zhijiansha.Entity.Video;
 import com.example.zhijiansha.myapplication.R;
+import com.example.zhijiansha.myapplication.VideoPlayerActivity;
 import com.example.zhijiansha.tools.FileUriTools;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class VideoPlayerListAdapter extends BaseAdapter {
     private MediaPlayer mMediaPlayer = new MediaPlayer();
 
 
-    public VideoPlayerListAdapter(Context context , List<Video> video) {
+    public VideoPlayerListAdapter(Context context, List<Video> video) {
         this.context = context;
         this.mVideo = video;
         this.layoutInflater = LayoutInflater.from(context);
@@ -74,25 +75,19 @@ public class VideoPlayerListAdapter extends BaseAdapter {
         holder.mHolderTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent;
+                Intent intent = new Intent();
                 Uri videoUri;
                 File videoFile = new File(mVideo.getPath());
-                intent = new Intent();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    videoUri=new FileUriTools().getFileUriTools(context,videoFile);
-                    //intent.setDataAndType(videoUri, "video/*");
-                    try {
-                        mMediaPlayer.setDataSource(context, videoUri);
-                        mMediaPlayer.seekTo(0);
-                        mMediaPlayer.start();
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
+                    videoUri = new FileUriTools().getFileUriTools(context, videoFile);
+                    Log.i("liutao","=====SET INTENT====="+videoUri.toString());
+                    intent.setData(videoUri);
                 } else {
-                    intent.setDataAndType(Uri.fromFile(videoFile), "video/*");
+                    intent.setData(Uri.fromFile(videoFile));
                 }
-                //context.startActivity(intent);
+                intent.setClass(context, VideoPlayerActivity.class);
+                context.startActivity(intent);
             }
         });
     }

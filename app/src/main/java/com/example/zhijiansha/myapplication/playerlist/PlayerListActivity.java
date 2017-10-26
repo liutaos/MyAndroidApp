@@ -87,10 +87,10 @@ public class PlayerListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= 23) {
             mPermissionsChecker = new PermissionsChecker(this);
-        }
-        if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
-            Toast.makeText(this, "请赋予权限后启动！！", Toast.LENGTH_LONG).show();
-            this.finish();
+            if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+                Toast.makeText(this, "请赋予权限后启动！！", Toast.LENGTH_LONG).show();
+                this.finish();
+            }
 
         }
         setContentView(R.layout.activity_player_list);

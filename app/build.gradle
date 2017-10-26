@@ -17,6 +17,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 dependencies {
     androidTestCompile fileTree(include: ['*.jar'], dir: 'libs')
@@ -35,6 +41,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:3.0.1'
     apt 'com.github.hotchemi:permissionsdispatcher-processor:3.0.1'
+    compile project(':ijkplayer-java')
 }
 repositories {
     jcenter()
