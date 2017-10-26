@@ -147,7 +147,7 @@ public class PlayerManager {
         this.activity = activity;
         screenWidthPixels = activity.getResources().getDisplayMetrics().widthPixels;
 
-        videoView = (IjkVideoView) activity.findViewById(R.id.video_view);
+        videoView = activity.findViewById(R.id.video_view);
         videoView.setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(IMediaPlayer mp) {
@@ -672,7 +672,7 @@ public class PlayerManager {
      * @return
      */
     public boolean isPlaying() {
-        return videoView != null ? videoView.isPlaying() : false;
+        return videoView != null && videoView.isPlaying();
     }
 
     public void stop() {
