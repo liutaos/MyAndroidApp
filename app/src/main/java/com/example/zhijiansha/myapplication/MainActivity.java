@@ -27,7 +27,10 @@ import permissions.dispatcher.OnPermissionDenied;
 import permissions.dispatcher.RuntimePermissions;
 
 /**
+ * 主界面
  *
+ * @author zhijiansha
+ * @time 2017-10-27 22:38
  */
 @RuntimePermissions
 public class MainActivity extends Activity implements View.OnClickListener {

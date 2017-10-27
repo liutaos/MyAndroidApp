@@ -27,6 +27,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * VIDEO 列表适配器
+ *
+ * @author zhijiansha
+ * @time 2017-10-27 22:40
+ */
 public class VideoPlayerListAdapter extends BaseAdapter {
 
     private List<Video> mVideo = new ArrayList<Video>();
@@ -81,7 +87,7 @@ public class VideoPlayerListAdapter extends BaseAdapter {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     videoUri = new FileUriTools().getFileUriTools(context, videoFile);
-                    Log.i("liutao","=====SET INTENT====="+videoUri.toString());
+                    Log.i("liutao", "=====SET INTENT=====" + videoUri.toString());
                     intent.setData(videoUri);
                 } else {
                     intent.setData(Uri.fromFile(videoFile));

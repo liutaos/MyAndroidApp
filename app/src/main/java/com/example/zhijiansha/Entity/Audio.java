@@ -6,6 +6,12 @@
 
 package com.example.zhijiansha.Entity;
 
+/**
+ * AUDIO 实体类
+ *
+ * @author zhijiansha
+ * @time 2017-10-27 22:42
+ */
 public class Audio {
 
     private int id;

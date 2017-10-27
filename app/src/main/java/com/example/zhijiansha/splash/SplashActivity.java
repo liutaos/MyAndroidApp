@@ -21,13 +21,32 @@ import com.example.zhijiansha.myapplication.MainActivity;
 import com.example.zhijiansha.myapplication.R;
 
 /**
+ * 欢迎页
  * Created by zhijiansha on 2017-10-21.
  */
 
 public class SplashActivity extends Activity {
+    /**
+     * 是否第一次启动app标记
+     *
+     * @author zhijiansha
+     * @time 2017-10-27 22:32
+     */
     private boolean isFirstUse = true;
+    /**
+     * 数据共享 写入 读取 标记
+     *
+     * @author zhijiansha
+     * @time 2017-10-27 22:33
+     */
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
+    /**
+     * timer 倒计时
+     *
+     * @author zhijiansha
+     * @time 2017-10-27 22:34
+     */
     private TextView mTVTime, mTVSplash;
     private RelativeLayout mSplashLayout;
     private int recLen = 5;
@@ -39,6 +58,8 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setTheme(android.R.style.Theme_DeviceDefault_NoActionBar_Fullscreen);
         setContentView(R.layout.activity_splash);
+        RelativeLayout mLayout = findViewById(R.id.splash_layout);
+        mLayout.setBackgroundColor(getResources().getColor(R.color.C));
         preferences = getSharedPreferences("isFirstUse", MODE_PRIVATE);
         isFirstUse = preferences.getBoolean("isFirstUse", true);
         editor = preferences.edit();
@@ -54,6 +75,13 @@ public class SplashActivity extends Activity {
         }
     }
 
+    /**
+     * 初始化视图
+     * 执行线程实现timer计时 自动退出欢迎页
+     *
+     * @author zhijiansha
+     * @time 2017-10-27 22:35
+     */
     public void initView() {
         mSplashLayout = findViewById(R.id.splash_layout);
         mTVTime = findViewById(R.id.tv_time);

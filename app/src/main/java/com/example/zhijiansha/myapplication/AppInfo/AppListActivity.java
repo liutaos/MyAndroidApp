@@ -34,6 +34,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 显示所有APP列表界面
+ *
+ * @author zhijiansha
+ * @time 2017-10-27 22:37
+ */
 public class AppListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     private ListView mlistview = null;
     /**

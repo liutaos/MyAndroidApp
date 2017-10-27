@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * IMAGE 列表适配器
  * Created by zhijiansha on 2017-10-21.
  */
 

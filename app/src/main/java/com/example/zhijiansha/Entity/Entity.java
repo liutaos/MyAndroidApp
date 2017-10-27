@@ -7,6 +7,7 @@
 package com.example.zhijiansha.Entity;
 
 /**
+ * 测试类
  * Created by zhijiansha on 2017-10-21.
  */
 
@@ -20,7 +21,6 @@ public class Entity {
     public void setTvData(String tvData) {
         this.tvData = tvData;
     }
-
 
 
 }

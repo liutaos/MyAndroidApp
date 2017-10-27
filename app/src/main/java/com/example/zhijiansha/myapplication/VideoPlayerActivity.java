@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.zhijiansha.myapplication.common.PlayerManager;
 
 /**
+ * 视频播放界面
  * Created by zhijiansha on 2017-10-21.
  */
 

@@ -16,6 +16,14 @@ import com.example.zhijiansha.Entity.Audio;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * AUDIO Provider
+ * 返回查询集合
+ * List<Audio>F
+ *
+ * @author zhijiansha
+ * @time 2017-10-27 22:43
+ */
 public class AudioProvider implements AbstructProvider {
 
     private Context context;

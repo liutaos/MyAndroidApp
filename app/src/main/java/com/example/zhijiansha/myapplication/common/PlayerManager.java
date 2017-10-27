@@ -35,7 +35,10 @@ import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 /**
- * Created by tcking on 15/10/27.
+ * 播放管理封装类
+ *
+ * @author zhijiansha
+ * @time 2017-10-27 22:38
  */
 public class PlayerManager {
     /**

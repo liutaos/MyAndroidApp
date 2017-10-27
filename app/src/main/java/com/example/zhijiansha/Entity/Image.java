@@ -6,6 +6,12 @@
 
 package com.example.zhijiansha.Entity;
 
+/**
+ * IMAGE 实体类
+ *
+ * @author zhijiansha
+ * @time 2017-10-27 22:41
+ */
 public class Image {
     private int id;
     private String title;

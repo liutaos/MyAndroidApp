@@ -9,6 +9,12 @@ package com.example.zhijiansha.Entity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 
+/**
+ * APPINFO 实体类
+ *
+ * @author zhijiansha
+ * @time 2017-10-27 22:42
+ */
 public class AppInfo {
     private String appLabel;
     private Drawable appIcon;

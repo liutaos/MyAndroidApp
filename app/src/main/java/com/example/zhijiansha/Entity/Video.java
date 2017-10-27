@@ -7,6 +7,12 @@
 
 package com.example.zhijiansha.Entity;
 
+/**
+ * VIDEO 实体类
+ *
+ * @author zhijiansha
+ * @time 2017-10-27 22:41
+ */
 public class Video {
     private int id;
     private String title;

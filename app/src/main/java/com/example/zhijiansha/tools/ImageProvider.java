@@ -16,6 +16,13 @@ import com.example.zhijiansha.Entity.Image;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Image Provider
+ *
+ * @author 返回查询集合
+ *         List<Audio>F
+ * @time 2017-10-27 22:45
+ */
 public class ImageProvider implements AbstructProvider {
     private Context context;
 

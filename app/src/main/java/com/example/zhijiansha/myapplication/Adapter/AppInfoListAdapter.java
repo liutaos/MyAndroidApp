@@ -20,6 +20,12 @@ import com.example.zhijiansha.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 所有APP列表适配器
+ *
+ * @author zhijiansha
+ * @time 2017-10-27 22:39
+ */
 public class AppInfoListAdapter extends BaseAdapter {
 
     private List<AppInfo> mAppInfo = new ArrayList<>();

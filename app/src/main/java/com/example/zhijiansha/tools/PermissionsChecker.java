@@ -11,6 +11,9 @@ import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 
 /**
+ * 权限判断类
+ * 返回是否已获取到权限
+ * boolean
  * Created by zhijiansha on 2017-10-22.
  */
 

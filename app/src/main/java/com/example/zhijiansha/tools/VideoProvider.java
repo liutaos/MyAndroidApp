@@ -15,6 +15,14 @@ import com.example.zhijiansha.Entity.Video;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * VIDEO Provider
+ * 返回查找集合
+ * List<Video>
+ *
+ * @author zhijiansha
+ * @time 2017-10-27 22:46
+ */
 public class VideoProvider implements AbstructProvider {
     private Context context;
 

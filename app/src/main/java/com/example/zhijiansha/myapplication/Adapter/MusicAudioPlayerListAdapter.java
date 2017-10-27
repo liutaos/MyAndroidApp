@@ -24,6 +24,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * MUSIC AUDIO 列表适配器
+ *
+ * @author zhijiansha
+ * @time 2017-10-27 22:40
+ */
+
 public class MusicAudioPlayerListAdapter extends BaseAdapter {
 
     private List<Audio> mAudio = new ArrayList<Audio>();
@@ -31,7 +38,7 @@ public class MusicAudioPlayerListAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater layoutInflater;
 
-    public MusicAudioPlayerListAdapter(Context context , List<Audio> audio) {
+    public MusicAudioPlayerListAdapter(Context context, List<Audio> audio) {
         this.context = context;
         this.mAudio = audio;
         this.layoutInflater = LayoutInflater.from(context);
@@ -75,7 +82,7 @@ public class MusicAudioPlayerListAdapter extends BaseAdapter {
                 intent = new Intent();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    musicUri=new FileUriTools().getFileUriTools(context,audioFile);
+                    musicUri = new FileUriTools().getFileUriTools(context, audioFile);
                     intent.setDataAndType(musicUri, "audio/*");
                 } else {
                     intent.setDataAndType(Uri.fromFile(audioFile), "audio/*");
