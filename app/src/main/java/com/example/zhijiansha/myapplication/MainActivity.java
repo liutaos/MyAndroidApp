@@ -6,16 +6,20 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.zhijiansha.myapplication.AppInfo.AppListActivity;
 import com.example.zhijiansha.myapplication.about.AboutActivity;
 import com.example.zhijiansha.myapplication.playerlist.PlayerListActivity;
 import com.example.zhijiansha.tools.PermissionsChecker;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -53,6 +57,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
+    private boolean mBackKeyPressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,30 +66,33 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (Build.VERSION.SDK_INT >= 23) {
             mPermissionsChecker = new PermissionsChecker(this);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initView();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
+        if (Build.VERSION.SDK_INT >= 23) {
+            mPermissionsChecker = new PermissionsChecker(this);
+        }
         // 缺少权限时, 进入权限配置页面
         if (Build.VERSION.SDK_INT >= 23 && mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
             MainActivityPermissionsDispatcher.readExtrnalWithPermissionCheck(this);
         }
-        initView();
         resumeView();
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    protected void onRestart() {
+        super.onRestart();
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
 
     /**
      * 初始化视图
@@ -175,15 +183,40 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.btn_book:
+                Toast.makeText(this, "功能待定。。。", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_settings:
+                Toast.makeText(this, "正在打开系统设置", Toast.LENGTH_SHORT).show();
+                intent.setAction(Settings.ACTION_SETTINGS);
+                startActivity(intent);
                 break;
             case R.id.btn_appinfo:
+                Toast.makeText(this, "正在加载所有应用列表，请稍候。。。", Toast.LENGTH_SHORT).show();
+                intent.setClass(MainActivity.this, AppListActivity.class);
+                startActivity(intent);
                 break;
             case R.id.btn_about:
                 intent.setClass(MainActivity.this, AboutActivity.class);
                 startActivity(intent);
                 break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        if (!mBackKeyPressed) {
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            mBackKeyPressed = true;
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    mBackKeyPressed = false;
+                }
+            }, 2000);
+        } else {
+            this.finish();
+            System.exit(0);
         }
     }
 

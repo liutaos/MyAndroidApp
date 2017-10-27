@@ -70,13 +70,13 @@ public class MusicAudioPlayerListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent;
-                Uri pictureUri;
+                Uri musicUri;
                 File audioFile = new File(mAudio.getPath());
                 intent = new Intent();
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    pictureUri=new FileUriTools().getFileUriTools(context,audioFile);
-                    intent.setDataAndType(pictureUri, "audio/*");
+                    musicUri=new FileUriTools().getFileUriTools(context,audioFile);
+                    intent.setDataAndType(musicUri, "audio/*");
                 } else {
                     intent.setDataAndType(Uri.fromFile(audioFile), "audio/*");
                 }

@@ -34,6 +34,12 @@ import com.example.zhijiansha.tools.VideoProvider;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 媒体列表界面
+ *
+ * @author zhijiansha
+ * @time 2017-10-26 23:44
+ */
 public class PlayerListActivity extends AppCompatActivity {
     private ListView mPlayerList;
     /**
@@ -127,6 +133,7 @@ public class PlayerListActivity extends AppCompatActivity {
             }
         });
     }
+
 
     /**
      * 初始化视图
