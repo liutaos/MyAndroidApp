@@ -13,14 +13,18 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,6 +48,7 @@ public class AppListActivity extends AppCompatActivity implements AdapterView.On
     private ListView mlistview = null;
     /**
      * app 实体类
+     * list 存放APP
      *
      * @author zhijiansha
      * @time 2017-10-27 21:30
@@ -64,8 +69,6 @@ public class AppListActivity extends AppCompatActivity implements AdapterView.On
      */
     private PackageManager mPackageManager;
 
-    private String pkgName = null;
-
     private BroadcastReceiver mReceiver = null;
 
     private TextView mTvAppLabel, mTv_PkgName;
@@ -78,6 +81,10 @@ public class AppListActivity extends AppCompatActivity implements AdapterView.On
      * @time 2017-10-27 21:30
      */
     private QueryTask mQueryTask = null;
+
+    public AppListActivity() {
+        mPackageManager = null;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +103,26 @@ public class AppListActivity extends AppCompatActivity implements AdapterView.On
                 finish();
             }
         });
+
+        //api 21（5.0）以上 api 23(6.0)以下
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            //window.setStatusBarColor(Color.TRANSPARENT);//6.0的真机上反而是用这句生效
+            window.setStatusBarColor(Color.DKGRAY);
+        }
+        //api 23（6.0）以上
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+
         TextView titleTV = (TextView) findViewById(R.id.appinfo_title_toolbar);
         titleTV.setText(getResources().getString(R.string.btn_appinfo_text));
+        titleTV.setTextColor(Color.BLACK);
         mlistview = (ListView) findViewById(R.id.appinfo_listview);
         mlistAppInfo = new ArrayList<>();
         //queryAppInfo();
@@ -159,10 +184,15 @@ public class AppListActivity extends AppCompatActivity implements AdapterView.On
         unregisterReceiver(mReceiver);
     }
 
+    /**
+     * 点击一项启动APP
+     *
+     * @author zhijiansha
+     * @time 2017-10-27 23:23
+     */
     @Override
     public void onItemClick(AdapterView<?> arg0, View view, int position,
                             long arg3) {
-        // TODO Auto-generated method stub
         mTvAppLabel = view.findViewById(R.id.tvAppLabel);
         mTv_PkgName = view.findViewById(R.id.tvPkgName);
 
@@ -173,10 +203,15 @@ public class AppListActivity extends AppCompatActivity implements AdapterView.On
         startActivity(intent);
     }
 
+    /**
+     * 长摁一项卸载APP
+     *
+     * @author zhijiansha
+     * @time 2017-10-27 23:23
+     */
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view,
                                    int position, long id) {
-        // TODO 卸载
         mTv_PkgName = view.findViewById(R.id.tvPkgName);
         mTvAppLabel = view.findViewById(R.id.tvAppLabel);
 
@@ -212,7 +247,7 @@ public class AppListActivity extends AppCompatActivity implements AdapterView.On
         if (mlistAppInfo != null) {
             mlistAppInfo.clear();
             for (ResolveInfo reInfo : resolveInfos) {
-                pkgName = reInfo.activityInfo.packageName; // 获得应用程序的包名
+                String pkgName = reInfo.activityInfo.packageName; // 获得应用程序的包名
                 try {
                     String activityName = reInfo.activityInfo.name; // 获得该应用程序的启动Activity的name
                     String appLabel = (String) reInfo.loadLabel(mPackageManager); // 获得应用程序的Label

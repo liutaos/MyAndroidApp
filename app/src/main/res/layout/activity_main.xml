@@ -3,116 +3,148 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.example.zhijiansha.myapplication.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginBottom="1px">
+        android:layout_marginBottom="1px"
+        android:layout_weight="1">
 
         <Button
             android:id="@+id/btn_image"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="1px"
+            android:layout_marginEnd="1px"
             android:layout_weight="1"
+            android:background="@drawable/button_stytle"
+            android:focusable="true"
             android:text="@string/btn_image_text"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:theme="@style/Theme.AppCompat.Light" />
 
 
         <Button
             android:id="@+id/btn_music"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="1px"
+            android:layout_marginStart="1px"
             android:layout_weight="1"
+            android:background="@drawable/button_stytle"
+            android:focusable="true"
             android:text="@string/btn_music_text"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:theme="@style/Theme.AppCompat.Light" />
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginBottom="1px"
         android:layout_marginTop="1px"
-        android:layout_marginBottom="1px">
+        android:layout_weight="1">
 
         <Button
             android:id="@+id/btn_video"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="1px"
+            android:layout_marginEnd="1px"
             android:layout_weight="1"
+            android:background="@drawable/button_stytle"
+            android:focusable="true"
             android:text="@string/btn_video_text"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:theme="@style/Theme.AppCompat.Light" />
 
 
         <Button
             android:id="@+id/btn_audio"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="1px"
+            android:layout_marginStart="1px"
             android:layout_weight="1"
+            android:background="@drawable/button_stytle"
+            android:focusable="true"
             android:text="@string/btn_audio_text"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:theme="@style/Theme.AppCompat.Light" />
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginBottom="1px"
         android:layout_marginTop="1px"
-        android:layout_marginBottom="1px">
+        android:layout_weight="1">
 
         <Button
             android:id="@+id/btn_book"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="1px"
+            android:layout_marginEnd="1px"
             android:layout_weight="1"
+            android:background="@drawable/button_stytle"
+            android:focusable="true"
             android:text="@string/btn_book_text"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:theme="@style/Theme.AppCompat.Light" />
 
 
         <Button
             android:id="@+id/btn_settings"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="1px"
+            android:layout_marginStart="1px"
             android:layout_weight="1"
+            android:background="@drawable/button_stytle"
+            android:focusable="true"
             android:text="@string/btn_setings_text"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:theme="@style/Theme.AppCompat.Light" />
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginTop="1px">
+        android:layout_marginTop="1px"
+        android:layout_weight="1">
 
         <Button
             android:id="@+id/btn_appinfo"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="1px"
+            android:layout_marginEnd="1px"
             android:layout_weight="1"
+            android:background="@drawable/button_stytle"
+            android:focusable="true"
             android:text="@string/btn_appinfo_text"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:theme="@style/Theme.AppCompat.Light" />
 
         <Button
             android:id="@+id/btn_about"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="1px"
+            android:layout_marginStart="1px"
             android:layout_weight="1"
+            android:background="@drawable/button_stytle"
             android:text="@string/btn_about_text"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:theme="@style/Theme.AppCompat.Light" />
     </LinearLayout>
 
 

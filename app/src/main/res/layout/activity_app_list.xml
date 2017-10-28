@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context="com.example.zhijiansha.myapplication.AppInfo.AppListActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -16,7 +17,6 @@
             android:id="@+id/appinfo_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:drawable/title_bar"
             app:popupTheme="@style/AppTheme.PopupOverlay" >
 
             <TextView

@@ -8,12 +8,15 @@ package com.example.zhijiansha.myapplication.playerlist;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -97,7 +100,6 @@ public class PlayerListActivity extends AppCompatActivity {
                 Toast.makeText(this, "请赋予权限后启动！！", Toast.LENGTH_LONG).show();
                 this.finish();
             }
-
         }
         setContentView(R.layout.activity_player_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -107,6 +109,24 @@ public class PlayerListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //不显示默认的title
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
+        //api 21（5.0）以上 api 23(6.0)以下
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.DKGRAY);
+        }
+        //api 23（6.0）以上
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
+
+
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.font_left));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +180,6 @@ public class PlayerListActivity extends AppCompatActivity {
         }
 
         mPlayerList = (ListView) findViewById(R.id.player_list);
-        mPlayerList.setBackgroundColor(getResources().getColor(R.color.item_bg_color));
         if (mIntent.getAction().equals(mActionImage)) {
             mImageAdapter = new ImageListAdapter(this, mImage);
             mPlayerList.setAdapter(mImageAdapter);
@@ -188,7 +207,6 @@ public class PlayerListActivity extends AppCompatActivity {
             mImage = mImageProvider.getList();
             Log.i("liutao", "====initdata()====" + mImageProvider.getList().size());
         }
-        // if (mIntent.getAction().equals(mActionMusic)) {
         if (mIntent.getAction().equals(mActionAudio)) {
             mAudioProvider = new AudioProvider(this, mActionAudio);
             mAudio = mAudioProvider.getList();
@@ -199,8 +217,6 @@ public class PlayerListActivity extends AppCompatActivity {
             mAudio = mAudioProvider.getList();
             Log.i("liutao", "====initdata()====" + mAudioProvider.getList().size());
         }
-
-        //}
 
         if (mIntent.getAction().equals(mActionVideo)) {
             mVideoProvider = new VideoProvider(this);

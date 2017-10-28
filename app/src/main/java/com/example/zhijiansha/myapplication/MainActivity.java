@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -57,7 +59,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
      */
     private static final String[] PERMISSIONS = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.READ_PHONE_STATE
     };
 
     private boolean mBackKeyPressed = false;
@@ -69,11 +72,32 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if (Build.VERSION.SDK_INT >= 23) {
             mPermissionsChecker = new PermissionsChecker(this);
         }
+        // 缺少权限时, 进入权限配置页面
+        if (Build.VERSION.SDK_INT >= 23 && mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+            MainActivityPermissionsDispatcher.readExtrnalWithPermissionCheck(this);
+        }
+
+        //api 21（5.0）以上 api 23(6.0)以下
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            //window.setStatusBarColor(Color.TRANSPARENT);//6.0的真机上反而是用这句生效
+            window.setStatusBarColor(Color.DKGRAY);
+        }
+        //api 23（6.0）以上
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
         initView();
 
     }
@@ -83,10 +107,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         super.onResume();
         if (Build.VERSION.SDK_INT >= 23) {
             mPermissionsChecker = new PermissionsChecker(this);
-        }
-        // 缺少权限时, 进入权限配置页面
-        if (Build.VERSION.SDK_INT >= 23 && mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
-            MainActivityPermissionsDispatcher.readExtrnalWithPermissionCheck(this);
         }
         resumeView();
     }
@@ -103,6 +123,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
      * @author zhijiansha
      * @time 2017-10-24 19:36
      */
+
     public void initView() {
         mBtnImage = findViewById(R.id.btn_image);
         mBtnMusic = findViewById(R.id.btn_music);
@@ -136,28 +157,28 @@ public class MainActivity extends Activity implements View.OnClickListener {
         int b = random.nextInt(256);
 
         mBtnImage.setTextColor(Color.rgb(b, r, g));
-        mBtnImage.setBackgroundColor(Color.rgb(r, g, b));
+        //mBtnImage.setBackgroundColor(Color.rgb(r, g, b));
 
         mBtnMusic.setTextColor(Color.rgb(r, g, b));
-        mBtnMusic.setBackgroundColor(Color.rgb(b, r, g));
+        //mBtnMusic.setBackgroundColor(Color.rgb(b, r, g));
 
         mBtnVideo.setTextColor(Color.rgb(b, g, r));
-        mBtnVideo.setBackgroundColor(Color.rgb(r, b, g));
+        //mBtnVideo.setBackgroundColor(Color.rgb(r, b, g));
 
         mBtnAudio.setTextColor(Color.rgb(r, b, g));
-        mBtnAudio.setBackgroundColor(Color.rgb(b, g, r));
+        //mBtnAudio.setBackgroundColor(Color.rgb(b, g, r));
 
         mBtnBook.setTextColor(Color.rgb(b, r, g));
-        mBtnBook.setBackgroundColor(Color.rgb(r, g, b));
+        //mBtnBook.setBackgroundColor(Color.rgb(r, g, b));
 
         mBtnSetings.setTextColor(Color.rgb(r, g, b));
-        mBtnSetings.setBackgroundColor(Color.rgb(b, r, g));
+        //mBtnSetings.setBackgroundColor(Color.rgb(b, r, g));
 
         mBtnAppInfo.setTextColor(Color.rgb(b, g, r));
-        mBtnAppInfo.setBackgroundColor(Color.rgb(r, b, g));
+        //mBtnAppInfo.setBackgroundColor(Color.rgb(r, b, g));
 
         mBtnAbout.setTextColor(Color.rgb(r, b, g));
-        mBtnAbout.setBackgroundColor(Color.rgb(b, g, r));
+        //mBtnAbout.setBackgroundColor(Color.rgb(b, g, r));
 
     }
 
@@ -194,7 +215,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.btn_appinfo:
-                Toast.makeText(this, "正在加载所有应用列表，请稍候。。。", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "正在加载所有应用列表，请稍候。。。", Toast.LENGTH_LONG).show();
                 intent.setClass(MainActivity.this, AppListActivity.class);
                 startActivity(intent);
                 break;
@@ -240,13 +261,13 @@ public class MainActivity extends Activity implements View.OnClickListener {
         MainActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
-    @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    @OnPermissionDenied({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE})
     void readDenied() {
         Toast.makeText(this, "拒绝授权", Toast.LENGTH_LONG).show();
         this.finish();
     }
 
-    @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    @OnNeverAskAgain({Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE})
     void readAgain() {
         Toast.makeText(this, "拒绝授权不在询问", Toast.LENGTH_LONG).show();
         this.finish();
