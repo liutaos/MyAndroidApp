@@ -7,9 +7,6 @@
 package com.example.zhijiansha.myapplication.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +15,7 @@ import android.widget.TextView;
 
 import com.example.zhijiansha.Entity.Audio;
 import com.example.zhijiansha.myapplication.R;
-import com.example.zhijiansha.tools.FileUriTools;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,7 +68,8 @@ public class MusicAudioPlayerListAdapter extends BaseAdapter {
         //TODO implement
         final Audio mAudio = object;
         holder.mHolderTv.setText(mAudio.getTitle());
-        holder.mHolderTv.setOnClickListener(new View.OnClickListener() {
+        //旧的写法
+        /*holder.mHolderTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent;
@@ -89,7 +85,7 @@ public class MusicAudioPlayerListAdapter extends BaseAdapter {
                 }
                 context.startActivity(intent);
             }
-        });
+        });*/
 
     }
 

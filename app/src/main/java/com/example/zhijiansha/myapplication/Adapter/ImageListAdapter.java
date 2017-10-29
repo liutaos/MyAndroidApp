@@ -7,9 +7,6 @@
 package com.example.zhijiansha.myapplication.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +15,7 @@ import android.widget.TextView;
 
 import com.example.zhijiansha.Entity.Image;
 import com.example.zhijiansha.myapplication.R;
-import com.example.zhijiansha.tools.FileUriTools;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,13 +67,13 @@ public class ImageListAdapter extends BaseAdapter {
         //TODO implement
         final Image mImage = (Image) object;
         holder.mHolderTv.setText(mImage.getTitle());
-        holder.mHolderTv.setOnClickListener(new View.OnClickListener() {
+        /*holder.mHolderTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent;
                 Uri pictureUri;
-                File pictureFile = new File(mImage.getPath());
                 intent = new Intent();
+                File pictureFile = new File(mImage.getPath());
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                     pictureUri=new FileUriTools().getFileUriTools(context,pictureFile);
@@ -88,7 +83,7 @@ public class ImageListAdapter extends BaseAdapter {
                 }
                 context.startActivity(intent);
             }
-        });
+        });*/
     }
 
     protected class ViewHolder {

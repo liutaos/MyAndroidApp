@@ -9,11 +9,11 @@ package com.example.zhijiansha.myapplication.playerlist;
 import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -29,11 +29,14 @@ import com.example.zhijiansha.myapplication.Adapter.ImageListAdapter;
 import com.example.zhijiansha.myapplication.Adapter.MusicAudioPlayerListAdapter;
 import com.example.zhijiansha.myapplication.Adapter.VideoPlayerListAdapter;
 import com.example.zhijiansha.myapplication.R;
+import com.example.zhijiansha.myapplication.VideoPlayerActivity;
 import com.example.zhijiansha.tools.AudioProvider;
+import com.example.zhijiansha.tools.FileUriTools;
 import com.example.zhijiansha.tools.ImageProvider;
 import com.example.zhijiansha.tools.PermissionsChecker;
 import com.example.zhijiansha.tools.VideoProvider;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,27 +146,69 @@ public class PlayerListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        initData();
-        initView();
-
+        initDataAndView();
+        //新的写法 item 点击事件
         mPlayerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(PlayerListActivity.this, "===========", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent();
+                Uri fileUri;
+                File mFile;
+                switch (mIntent.getAction()) {
+                    case mActionImage:
+                        mFile = new File(mImage.get(position).getPath());
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            fileUri = new FileUriTools().getFileUriTools(getApplicationContext(), mFile);
+                            intent.setDataAndType(fileUri, "image/*");
+                        } else {
+                            intent.setDataAndType(Uri.fromFile(mFile), "image/*");
+                        }
+                        break;
+
+                    case mActionAudio:
+                    case mActionMusic:
+                        mFile = new File(mAudio.get(position).getPath());
+                        intent = new Intent();
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            fileUri = new FileUriTools().getFileUriTools(getApplicationContext(), mFile);
+                            intent.setDataAndType(fileUri, "audio/*");
+                        } else {
+                            intent.setDataAndType(Uri.fromFile(mFile), "audio/*");
+                        }
+                        break;
+
+                    case mActionVideo:
+                        mFile = new File(mVideo.get(position).getPath());
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            fileUri = new FileUriTools().getFileUriTools(getApplicationContext(), mFile);
+                            intent.setData(fileUri);
+                        } else {
+                            intent.setData(Uri.fromFile(mFile));
+                        }
+                        intent.setClass(getApplicationContext(), VideoPlayerActivity.class);
+                        break;
+                }
+                startActivity(intent);
             }
         });
     }
 
 
     /**
+     * 初始化数据
+     * and
      * 初始化视图
      *
      * @author zhijiansha
      * @time 2017-10-24 19:37
      */
-    public void initView() {
+    public void initDataAndView() {
         TextView titleTV = (TextView) findViewById(R.id.title_toolbar);
-        if (mIntent.getAction().equals(mActionImage)) {
+        mPlayerList = (ListView) findViewById(R.id.player_list);
+        /*if (mIntent.getAction().equals(mActionImage)) {
             titleTV.setText(this.getString(R.string.btn_image_text));
         }
 
@@ -177,9 +222,44 @@ public class PlayerListActivity extends AppCompatActivity {
 
         if (mIntent.getAction().equals(mActionVideo)) {
             titleTV.setText(this.getString(R.string.btn_video_text));
+        }*/
+
+        switch (mIntent.getAction()) {
+
+            case mActionImage:
+                mImageProvider = new ImageProvider(this);
+                mImage = mImageProvider.getList();
+                titleTV.setText(this.getString(R.string.btn_image_text));
+                mImageAdapter = new ImageListAdapter(this, mImage);
+                mPlayerList.setAdapter(mImageAdapter);
+                break;
+
+            case mActionAudio:
+                mAudioProvider = new AudioProvider(this, mActionAudio);
+                mAudio = mAudioProvider.getList();
+                titleTV.setText(this.getString(R.string.btn_audio_text));
+                mPlayerAdapter = new MusicAudioPlayerListAdapter(this, mAudio);
+                mPlayerList.setAdapter(mPlayerAdapter);
+                break;
+
+            case mActionMusic:
+                mAudioProvider = new AudioProvider(this, mActionMusic);
+                mAudio = mAudioProvider.getList();
+                titleTV.setText(this.getString(R.string.btn_music_text));
+                mPlayerAdapter = new MusicAudioPlayerListAdapter(this, mAudio);
+                mPlayerList.setAdapter(mPlayerAdapter);
+                break;
+            case mActionVideo:
+                mVideoProvider = new VideoProvider(this);
+                mVideo = mVideoProvider.getList();
+                titleTV.setText(this.getString(R.string.btn_video_text));
+                mVideoPlayerAdapter = new VideoPlayerListAdapter(this, mVideo);
+                mPlayerList.setAdapter(mVideoPlayerAdapter);
+                break;
+
         }
 
-        mPlayerList = (ListView) findViewById(R.id.player_list);
+        /*
         if (mIntent.getAction().equals(mActionImage)) {
             mImageAdapter = new ImageListAdapter(this, mImage);
             mPlayerList.setAdapter(mImageAdapter);
@@ -193,6 +273,7 @@ public class PlayerListActivity extends AppCompatActivity {
             mVideoPlayerAdapter = new VideoPlayerListAdapter(this, mVideo);
             mPlayerList.setAdapter(mVideoPlayerAdapter);
         }
+       */
     }
 
     /**
@@ -201,7 +282,30 @@ public class PlayerListActivity extends AppCompatActivity {
      * @author zhijiansha
      * @time 2017-10-24 19:37
      */
+    /*
     public void initData() {
+        switch (mIntent.getAction()) {
+
+            case mActionImage:
+                mImageProvider = new ImageProvider(this);
+                mImage = mImageProvider.getList();
+                break;
+
+            case mActionAudio:
+                mAudioProvider = new AudioProvider(this, mActionAudio);
+                mAudio = mAudioProvider.getList();
+                break;
+
+            case mActionMusic:
+                mAudioProvider = new AudioProvider(this, mActionMusic);
+                mAudio = mAudioProvider.getList();
+                break;
+            case mActionVideo:
+                mVideoProvider = new VideoProvider(this);
+                mVideo = mVideoProvider.getList();
+                break;
+
+        }
         if (mIntent.getAction().equals(mActionImage)) {
             mImageProvider = new ImageProvider(this);
             mImage = mImageProvider.getList();
@@ -223,5 +327,5 @@ public class PlayerListActivity extends AppCompatActivity {
             mVideo = mVideoProvider.getList();
             Log.i("liutao", "====initdata()====" + mVideoProvider.getList().size());
         }
-    }
+    }*/
 }

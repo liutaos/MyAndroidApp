@@ -7,11 +7,7 @@
 package com.example.zhijiansha.myapplication.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +16,7 @@ import android.widget.TextView;
 
 import com.example.zhijiansha.Entity.Video;
 import com.example.zhijiansha.myapplication.R;
-import com.example.zhijiansha.myapplication.VideoPlayerActivity;
-import com.example.zhijiansha.tools.FileUriTools;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,7 +71,7 @@ public class VideoPlayerListAdapter extends BaseAdapter {
         //TODO implement
         final Video mVideo = object;
         holder.mHolderTv.setText(mVideo.getTitle());
-        holder.mHolderTv.setOnClickListener(new View.OnClickListener() {
+        /*holder.mHolderTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -95,7 +88,7 @@ public class VideoPlayerListAdapter extends BaseAdapter {
                 intent.setClass(context, VideoPlayerActivity.class);
                 context.startActivity(intent);
             }
-        });
+        });*/
     }
 
     protected class ViewHolder {
