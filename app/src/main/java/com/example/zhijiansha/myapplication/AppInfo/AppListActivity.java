@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.example.zhijiansha.Entity.AppInfo;
 import com.example.zhijiansha.myapplication.Adapter.AppInfoListAdapter;
 import com.example.zhijiansha.myapplication.R;
+import com.example.zhijiansha.widget.MyView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -82,6 +83,8 @@ public class AppListActivity extends AppCompatActivity implements AdapterView.On
      */
     private QueryTask mQueryTask = null;
 
+    private MyView mView;
+
     public AppListActivity() {
         mPackageManager = null;
     }
@@ -123,6 +126,8 @@ public class AppListActivity extends AppCompatActivity implements AdapterView.On
         TextView titleTV = (TextView) findViewById(R.id.appinfo_title_toolbar);
         titleTV.setText(getResources().getString(R.string.btn_appinfo_text));
         titleTV.setTextColor(Color.BLACK);
+        mView = new MyView(this);
+        mView = (MyView) findViewById(R.id.ani_myview);
         mlistview = (ListView) findViewById(R.id.appinfo_listview);
         mlistAppInfo = new ArrayList<>();
         //queryAppInfo();
@@ -292,11 +297,13 @@ public class AppListActivity extends AppCompatActivity implements AdapterView.On
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            mView.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            mView.setVisibility(View.GONE);
             mAppInfoListAdapter.notifyDataSetChanged();
         }
 

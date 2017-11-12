@@ -29,7 +29,14 @@
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
-
+    <!--加载动画-->
+    <com.example.zhijiansha.widget.MyView
+        android:id="@+id/ani_myview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+    <!--加载动画-->
     <include layout="@layout/content_app_list" />
 
 </android.support.design.widget.CoordinatorLayout>
