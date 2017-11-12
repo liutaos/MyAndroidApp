@@ -24,7 +24,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/TranslucentTheme"/>
+            android:theme="@style/TranslucentTheme" />
         <activity android:name="com.example.zhijiansha.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,17 +34,17 @@
         </activity>
         <activity
             android:name=".VideoPlayerActivity"
-            android:configChanges="orientation|keyboardHidden"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorLandscape"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/MyStyle" />
         <activity
             android:name=".AppInfo.AppListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".playerlist.PlayerListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".about.AboutActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -58,6 +58,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+        <service
+            android:name="com.example.zhijiansha.widget.services.MediaPlayerService"
+            android:enabled="false"
+            android:exported="false" />
 
     </application>
 

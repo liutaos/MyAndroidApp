@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.zhijiansha.Entity.Video;
@@ -19,6 +20,8 @@ import com.example.zhijiansha.myapplication.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.zhijiansha.myapplication.R.mipmap.ic_launcher;
 
 /**
  * VIDEO 列表适配器
@@ -71,6 +74,7 @@ public class VideoPlayerListAdapter extends BaseAdapter {
         //TODO implement
         final Video mVideo = object;
         holder.mHolderTv.setText(mVideo.getTitle());
+        holder.mHolderIv.setImageDrawable(context.getResources().getDrawable(ic_launcher));
         /*holder.mHolderTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,8 +98,11 @@ public class VideoPlayerListAdapter extends BaseAdapter {
     protected class ViewHolder {
         public TextView mHolderTv;
 
+        public ImageView mHolderIv;
+
         public ViewHolder(View view) {
             mHolderTv = view.findViewById(R.id.player_tv_title);
+            mHolderIv = view.findViewById(R.id.player_thumbnail);
             mHolderTv.setTextColor(context.getResources().getColor(R.color.item_title_color));
         }
     }

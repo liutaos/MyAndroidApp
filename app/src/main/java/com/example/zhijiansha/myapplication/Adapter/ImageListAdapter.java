@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.zhijiansha.Entity.Image;
@@ -67,6 +68,9 @@ public class ImageListAdapter extends BaseAdapter {
         //TODO implement
         final Image mImage = (Image) object;
         holder.mHolderTv.setText(mImage.getTitle());
+        //Drawable mDbl = new BitmapDrawable(mImage.getThumbnail());
+        holder.mHolderIv.setImageBitmap(mImage.getThumbnail());
+        //holder.mHolderIv.setImageDrawable(mDbl);
         /*holder.mHolderTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,9 +93,11 @@ public class ImageListAdapter extends BaseAdapter {
     protected class ViewHolder {
 
         public TextView mHolderTv;
+        public ImageView mHolderIv;
 
         public ViewHolder(View view) {
             mHolderTv = view.findViewById(R.id.player_tv_title);
+            mHolderIv = view.findViewById(R.id.player_thumbnail);
             mHolderTv.setTextColor(context.getResources().getColor(R.color.item_title_color));
 
         }

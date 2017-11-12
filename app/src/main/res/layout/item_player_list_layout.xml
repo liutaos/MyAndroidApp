@@ -6,14 +6,24 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/player_thumbnail"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/player_tv_title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:text="@string/action_settings"
+        android:layout_marginLeft="5dp"
         android:gravity="center_vertical"
-        android:textSize="25sp" />
+        android:textSize="25sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:singleLine="true"
+        tools:ignore="EllipsizeMaxLines" />
 
 </LinearLayout>

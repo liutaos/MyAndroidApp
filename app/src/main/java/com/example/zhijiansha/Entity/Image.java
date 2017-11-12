@@ -6,6 +6,8 @@
 
 package com.example.zhijiansha.Entity;
 
+import android.graphics.Bitmap;
+
 /**
  * IMAGE 实体类
  *
@@ -19,6 +21,7 @@ public class Image {
     private String mimeType;
     private String path;
     private long size;
+    private Bitmap thumbnail;
 
     public Image() {
         super();
@@ -33,7 +36,7 @@ public class Image {
      * @param size
      */
     public Image(int id, String title, String displayName, String mimeType,
-                 String path, long size) {
+                 String path, long size, Bitmap thumbnail) {
         super();
         this.id = id;
         this.title = title;
@@ -41,6 +44,7 @@ public class Image {
         this.mimeType = mimeType;
         this.path = path;
         this.size = size;
+        this.thumbnail = thumbnail;
     }
 
     public int getId() {
@@ -91,4 +95,11 @@ public class Image {
         this.size = size;
     }
 
+    public  void setThumbnail(Bitmap thumbnail){
+        this.thumbnail = thumbnail;
+    }
+
+    public Bitmap getThumbnail(){
+        return thumbnail;
+    }
 }

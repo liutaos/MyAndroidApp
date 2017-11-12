@@ -39,11 +39,11 @@ public class AndroidMediaController extends MediaController implements IMediaCon
 
     public void setSupportActionBar(@Nullable ActionBar actionBar) {
         mActionBar = actionBar;
-        if (isShowing()) {
-            actionBar.show();
-        } else {
-            actionBar.hide();
-        }
+        //if (isShowing()) {
+        //    actionBar.show();
+        //} else {
+        //    actionBar.hide();
+        //  }
     }
 
     @Override

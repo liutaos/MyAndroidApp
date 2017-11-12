@@ -10,6 +10,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,7 @@ import com.example.zhijiansha.tools.FileUriTools;
 import com.example.zhijiansha.tools.ImageProvider;
 import com.example.zhijiansha.tools.PermissionsChecker;
 import com.example.zhijiansha.tools.VideoProvider;
+import com.example.zhijiansha.widget.MyView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -89,21 +91,18 @@ public class PlayerListActivity extends AppCompatActivity {
     private static final String mActionVideo = "VIDEO";
 
     private PermissionsChecker mPermissionsChecker;
+
     private static final String[] PERMISSIONS = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
+    private DataTask mDataTask;
+    private MyView mView;// = new MyView(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= 23) {
-            mPermissionsChecker = new PermissionsChecker(this);
-            if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
-                Toast.makeText(this, "请赋予权限后启动！！", Toast.LENGTH_LONG).show();
-                this.finish();
-            }
-        }
         setContentView(R.layout.activity_player_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //toolbar.setTitle("");
@@ -112,8 +111,17 @@ public class PlayerListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //不显示默认的title
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-
+        //api 23（6.0）以上 检测权限 并设置状态栏颜色
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //设置状态栏颜色
+            this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            //检测权限
+            mPermissionsChecker = new PermissionsChecker(this);
+            if (mPermissionsChecker.lacksPermissions(PERMISSIONS)) {
+                Toast.makeText(this, "请赋予权限后启动！！", Toast.LENGTH_LONG).show();
+                this.finish();
+            }
+        }
         //api 21（5.0）以上 api 23(6.0)以下
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             Window window = getWindow();
@@ -124,11 +132,6 @@ public class PlayerListActivity extends AppCompatActivity {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.DKGRAY);
         }
-        //api 23（6.0）以上
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            this.getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
-
 
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.font_left));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -141,12 +144,12 @@ public class PlayerListActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.fragment, new PlayerListActivityFragment()).commit();
         }
+        initDataAndView();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initDataAndView();
         //新的写法 item 点击事件
         mPlayerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -173,10 +176,11 @@ public class PlayerListActivity extends AppCompatActivity {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                             fileUri = new FileUriTools().getFileUriTools(getApplicationContext(), mFile);
-                            intent.setDataAndType(fileUri, "audio/*");
+                            intent.setData(fileUri);
                         } else {
-                            intent.setDataAndType(Uri.fromFile(mFile), "audio/*");
+                            intent.setData(Uri.fromFile(mFile));
                         }
+                        intent.setClass(getApplicationContext(), VideoPlayerActivity.class);
                         break;
 
                     case mActionVideo:
@@ -207,73 +211,29 @@ public class PlayerListActivity extends AppCompatActivity {
      */
     public void initDataAndView() {
         TextView titleTV = (TextView) findViewById(R.id.title_toolbar);
+        mView = new MyView(this);
+        mView = (MyView) findViewById(R.id.ani_myview);
         mPlayerList = (ListView) findViewById(R.id.player_list);
-        /*if (mIntent.getAction().equals(mActionImage)) {
-            titleTV.setText(this.getString(R.string.btn_image_text));
-        }
-
-        if (mIntent.getAction().equals(mActionAudio)) {
-            titleTV.setText(this.getString(R.string.btn_audio_text));
-        }
-
-        if (mIntent.getAction().equals(mActionMusic)) {
-            titleTV.setText(this.getString(R.string.btn_music_text));
-        }
-
-        if (mIntent.getAction().equals(mActionVideo)) {
-            titleTV.setText(this.getString(R.string.btn_video_text));
-        }*/
 
         switch (mIntent.getAction()) {
 
             case mActionImage:
-                mImageProvider = new ImageProvider(this);
-                mImage = mImageProvider.getList();
                 titleTV.setText(this.getString(R.string.btn_image_text));
-                mImageAdapter = new ImageListAdapter(this, mImage);
-                mPlayerList.setAdapter(mImageAdapter);
                 break;
 
             case mActionAudio:
-                mAudioProvider = new AudioProvider(this, mActionAudio);
-                mAudio = mAudioProvider.getList();
                 titleTV.setText(this.getString(R.string.btn_audio_text));
-                mPlayerAdapter = new MusicAudioPlayerListAdapter(this, mAudio);
-                mPlayerList.setAdapter(mPlayerAdapter);
                 break;
 
             case mActionMusic:
-                mAudioProvider = new AudioProvider(this, mActionMusic);
-                mAudio = mAudioProvider.getList();
                 titleTV.setText(this.getString(R.string.btn_music_text));
-                mPlayerAdapter = new MusicAudioPlayerListAdapter(this, mAudio);
-                mPlayerList.setAdapter(mPlayerAdapter);
-                break;
             case mActionVideo:
-                mVideoProvider = new VideoProvider(this);
-                mVideo = mVideoProvider.getList();
                 titleTV.setText(this.getString(R.string.btn_video_text));
-                mVideoPlayerAdapter = new VideoPlayerListAdapter(this, mVideo);
-                mPlayerList.setAdapter(mVideoPlayerAdapter);
                 break;
 
         }
-
-        /*
-        if (mIntent.getAction().equals(mActionImage)) {
-            mImageAdapter = new ImageListAdapter(this, mImage);
-            mPlayerList.setAdapter(mImageAdapter);
-        }
-
-        if (mIntent.getAction().equals(mActionAudio) || mIntent.getAction().equals(mActionMusic)) {
-            mPlayerAdapter = new MusicAudioPlayerListAdapter(this, mAudio);
-            mPlayerList.setAdapter(mPlayerAdapter);
-        }
-        if (mIntent.getAction().equals(mActionVideo)) {
-            mVideoPlayerAdapter = new VideoPlayerListAdapter(this, mVideo);
-            mPlayerList.setAdapter(mVideoPlayerAdapter);
-        }
-       */
+        mDataTask = new DataTask();
+        mDataTask.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
     }
 
     /**
@@ -282,50 +242,74 @@ public class PlayerListActivity extends AppCompatActivity {
      * @author zhijiansha
      * @time 2017-10-24 19:37
      */
-    /*
-    public void initData() {
-        switch (mIntent.getAction()) {
+    class DataTask extends AsyncTask<Void, Integer, Void> {
 
-            case mActionImage:
-                mImageProvider = new ImageProvider(this);
-                mImage = mImageProvider.getList();
-                break;
-
-            case mActionAudio:
-                mAudioProvider = new AudioProvider(this, mActionAudio);
-                mAudio = mAudioProvider.getList();
-                break;
-
-            case mActionMusic:
-                mAudioProvider = new AudioProvider(this, mActionMusic);
-                mAudio = mAudioProvider.getList();
-                break;
-            case mActionVideo:
-                mVideoProvider = new VideoProvider(this);
-                mVideo = mVideoProvider.getList();
-                break;
-
-        }
-        if (mIntent.getAction().equals(mActionImage)) {
-            mImageProvider = new ImageProvider(this);
-            mImage = mImageProvider.getList();
-            Log.i("liutao", "====initdata()====" + mImageProvider.getList().size());
-        }
-        if (mIntent.getAction().equals(mActionAudio)) {
-            mAudioProvider = new AudioProvider(this, mActionAudio);
-            mAudio = mAudioProvider.getList();
-            Log.i("liutao", "====initdata()====" + mAudioProvider.getList().size());
-        }
-        if (mIntent.getAction().equals(mActionMusic)) {
-            mAudioProvider = new AudioProvider(this, mActionMusic);
-            mAudio = mAudioProvider.getList();
-            Log.i("liutao", "====initdata()====" + mAudioProvider.getList().size());
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            //加载动画
+            mView.setDistance(100);
+            mView.setVisibility(View.VISIBLE);
+            //Toast.makeText(PlayerListActivity.this, "正在加载数据请稍候。。。。。。", Toast.LENGTH_LONG).show();
         }
 
-        if (mIntent.getAction().equals(mActionVideo)) {
-            mVideoProvider = new VideoProvider(this);
-            mVideo = mVideoProvider.getList();
-            Log.i("liutao", "====initdata()====" + mVideoProvider.getList().size());
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
         }
-    }*/
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            mView.setVisibility(View.GONE);
+            switch (mIntent.getAction()) {
+
+                case mActionImage:
+                    mImageAdapter = new ImageListAdapter(PlayerListActivity.this, mImage);
+                    mPlayerList.setAdapter(mImageAdapter);
+                    break;
+
+                case mActionAudio:
+                    mPlayerAdapter = new MusicAudioPlayerListAdapter(PlayerListActivity.this, mAudio);
+                    mPlayerList.setAdapter(mPlayerAdapter);
+                    break;
+
+                case mActionMusic:
+                    mPlayerAdapter = new MusicAudioPlayerListAdapter(PlayerListActivity.this, mAudio);
+                    mPlayerList.setAdapter(mPlayerAdapter);
+                    break;
+                case mActionVideo:
+                    mVideoPlayerAdapter = new VideoPlayerListAdapter(PlayerListActivity.this, mVideo);
+                    mPlayerList.setAdapter(mVideoPlayerAdapter);
+                    break;
+            }
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            switch (mIntent.getAction()) {
+
+                case mActionImage:
+                    mImageProvider = new ImageProvider(PlayerListActivity.this);
+                    mImage = mImageProvider.getList();
+                    break;
+
+                case mActionAudio:
+                    mAudioProvider = new AudioProvider(PlayerListActivity.this, mActionAudio);
+                    mAudio = mAudioProvider.getList();
+                    break;
+
+                case mActionMusic:
+                    mAudioProvider = new AudioProvider(PlayerListActivity.this, mActionMusic);
+                    mAudio = mAudioProvider.getList();
+                    break;
+                case mActionVideo:
+                    mVideoProvider = new VideoProvider(PlayerListActivity.this);
+                    mVideo = mVideoProvider.getList();
+                    break;
+            }
+            return null;
+        }
+    }
 }

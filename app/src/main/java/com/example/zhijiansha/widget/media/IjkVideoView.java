@@ -25,6 +25,8 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.MediaController;
 
+import com.example.zhijiansha.widget.services.MediaPlayerService;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +53,9 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
     public static final int STATE_PAUSED = 4;
     public static final int STATE_PLAYBACK_COMPLETED = 5;
 
-    public int getCurrentState() {
+    /*public int getCurrentState() {
         return mCurrentState;
-    }
+    }*/
 
     // mCurrentState is a VideoView object's current state.
     // mTargetState is the state that a method caller intends to reach.
@@ -308,8 +310,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "start-on-prepared", 0);
 
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "http-detect-range-support", 0);
-                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "timeout", 10000000);
-                    ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "reconnect", 1);
+                    //ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "timeout", 10000000);
+                    //ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "reconnect", 1);
 
                     ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48);
                 }
@@ -909,8 +911,8 @@ public class IjkVideoView extends FrameLayout implements MediaController.MediaPl
 
     private void initBackground() {
         if (enableBackgroundPlay) {
-           // MediaPlayerService.intentToStart(getContext());
-            //mMediaPlayer = MediaPlayerService.getMediaPlayer();
+            MediaPlayerService.intentToStart(getContext());
+            mMediaPlayer = MediaPlayerService.getMediaPlayer();
         }
     }
 

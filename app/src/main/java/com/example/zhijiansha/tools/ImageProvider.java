@@ -9,6 +9,8 @@ package com.example.zhijiansha.tools;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
 
 import com.example.zhijiansha.Entity.Image;
@@ -58,8 +60,15 @@ public class ImageProvider implements AbstructProvider {
                     long size = cursor
                             .getLong(cursor
                                     .getColumnIndexOrThrow(MediaStore.Images.Media.SIZE));
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inDither = false;
+                    options.inPurgeable=true;
+                    options.inInputShareable=true;
+                    options.inPreferredConfig = Bitmap.Config.ARGB_4444;
+                    Bitmap thumbnail = MediaStore.Images.Thumbnails.getThumbnail
+                            (context.getContentResolver(),  id, MediaStore.Images.Thumbnails.MICRO_KIND, options);
                     Image image = new Image(id, title, displayName, mimeType,
-                            path, size);
+                            path, size,thumbnail);
                     list.add(image);
                 }
                 cursor.close();
