@@ -33,7 +33,7 @@ public class MyView extends View {
      * 目前只支持代码设置颜色、最大半径、最小半径等属性
      * version 1.0
      * //TODO 2.0 添加xml自定义属性支持
-     * Created by HanHailong on 15/8/07.
+     *
      */
     //默认小球最大半径
     private final static int DEFAULT_MAX_RADIUS = 25;

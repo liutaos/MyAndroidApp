@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -99,6 +100,8 @@ public class PlayerListActivity extends AppCompatActivity {
 
     private DataTask mDataTask;
     private MyView mView;// = new MyView(this);
+    private LinearLayout mLodingLY;
+    private TextView mTitleTV,mLodingTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,27 +213,26 @@ public class PlayerListActivity extends AppCompatActivity {
      * @time 2017-10-24 19:37
      */
     public void initDataAndView() {
-        TextView titleTV = (TextView) findViewById(R.id.title_toolbar);
+        mTitleTV = (TextView) findViewById(R.id.title_toolbar);
+        mLodingTV = (TextView) findViewById(R.id.loding_tv);
+        mLodingLY = (LinearLayout) findViewById(R.id.loding);
         mView = new MyView(this);
         mView = (MyView) findViewById(R.id.ani_myview);
         mPlayerList = (ListView) findViewById(R.id.player_list);
 
         switch (mIntent.getAction()) {
-
             case mActionImage:
-                titleTV.setText(this.getString(R.string.btn_image_text));
+                mTitleTV.setText(this.getString(R.string.btn_image_text));
                 break;
-
             case mActionAudio:
-                titleTV.setText(this.getString(R.string.btn_audio_text));
+                mTitleTV.setText(this.getString(R.string.btn_audio_text));
                 break;
-
             case mActionMusic:
-                titleTV.setText(this.getString(R.string.btn_music_text));
-            case mActionVideo:
-                titleTV.setText(this.getString(R.string.btn_video_text));
+                mTitleTV.setText(this.getString(R.string.btn_music_text));
                 break;
-
+            case mActionVideo:
+                mTitleTV.setText(this.getString(R.string.btn_video_text));
+                break;
         }
         mDataTask = new DataTask();
         mDataTask.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
@@ -247,6 +249,8 @@ public class PlayerListActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            mLodingLY.setVisibility(View.VISIBLE);
+            mLodingTV.setVisibility(View.VISIBLE);
             //加载动画
             mView.setDistance(100);
             mView.setVisibility(View.VISIBLE);
@@ -262,6 +266,8 @@ public class PlayerListActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            mLodingLY.setVisibility(View.GONE);
+            mLodingTV.setVisibility(View.GONE);
             mView.setVisibility(View.GONE);
             switch (mIntent.getAction()) {
 

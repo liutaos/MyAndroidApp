@@ -17,7 +17,7 @@
             android:id="@+id/appinfo_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <TextView
                 android:id="@+id/appinfo_title_toolbar"
@@ -25,18 +25,13 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
-                android:textSize="30sp"/>
+                android:textSize="30sp" />
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
-    <!--加载动画-->
-    <com.example.zhijiansha.widget.MyView
-        android:id="@+id/ani_myview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
-    <!--加载动画-->
+
+    <include layout="@layout/loding_layout" />
+
     <include layout="@layout/content_app_list" />
 
 </android.support.design.widget.CoordinatorLayout>

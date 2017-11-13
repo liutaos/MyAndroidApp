@@ -12,6 +12,14 @@
     <string name="btn_appinfo_text" translatable="false">应用</string>
     <string name="btn_about_text" translatable="false">关于</string>
     <string name="title_about_tv" translatable="false">" 关      于 "</string>
+    <string name="title_activity_player_list">PlayerListActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_app_list">AppListActivity</string>
+    <string name="app_info_name">"应用名称："</string>
+    <string name="app_info_label">"Label"</string>
+    <string name="app_info_pkgname">"包名："</string>
+    <string name="app_info_pkg">"com.android.app"</string>
+    <string name="loding">数据正在加载,请稍候。。。。。。</string>
 
     <string name="about_string" translatable="false">"
 
@@ -19,7 +27,7 @@
 
         本应用为简单的本地工具app；
         实现了本地的媒体库查询，并显示到对应的界面中；
-        图片查询并显示列表；
+        图片查询并显示列表,缩略图显示；
         音乐铃声查询并显示列表；
         视频查询并显示列表，点击一项可自动播放；
 
@@ -38,11 +46,5 @@
         E-mail:liutaos@qq.com
         "
     </string>
-    <string name="title_activity_player_list">PlayerListActivity</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_app_list">AppListActivity</string>
-    <string name="app_info_name">"应用名称："</string>
-    <string name="app_info_label">"Label"</string>
-    <string name="app_info_pkgname">"包名："</string>
-    <string name="app_info_pkg">"com.android.app"</string>
+
 </resources>

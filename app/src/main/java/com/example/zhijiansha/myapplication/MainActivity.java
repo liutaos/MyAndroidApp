@@ -215,7 +215,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.btn_appinfo:
-                Toast.makeText(this, "正在加载所有应用列表，请稍候。。。", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "正在加载所有应用列表，请稍候。。。", Toast.LENGTH_LONG).show();
                 intent.setClass(MainActivity.this, AppListActivity.class);
                 startActivity(intent);
                 break;

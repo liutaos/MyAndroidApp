@@ -26,6 +26,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,6 +85,8 @@ public class AppListActivity extends AppCompatActivity implements AdapterView.On
     private QueryTask mQueryTask = null;
 
     private MyView mView;
+    private LinearLayout mLodingLY;
+    private TextView mLodingTV;
 
     public AppListActivity() {
         mPackageManager = null;
@@ -128,6 +131,8 @@ public class AppListActivity extends AppCompatActivity implements AdapterView.On
         titleTV.setTextColor(Color.BLACK);
         mView = new MyView(this);
         mView = (MyView) findViewById(R.id.ani_myview);
+        mLodingLY = (LinearLayout) findViewById(R.id.loding);
+        mLodingTV = (TextView) findViewById(R.id.loding_tv);
         mlistview = (ListView) findViewById(R.id.appinfo_listview);
         mlistAppInfo = new ArrayList<>();
         //queryAppInfo();
@@ -252,11 +257,15 @@ public class AppListActivity extends AppCompatActivity implements AdapterView.On
         if (mlistAppInfo != null) {
             mlistAppInfo.clear();
             for (ResolveInfo reInfo : resolveInfos) {
-                String pkgName = reInfo.activityInfo.packageName; // 获得应用程序的包名
+                // 获得应用程序的包名
+                String pkgName = reInfo.activityInfo.packageName;
                 try {
-                    String activityName = reInfo.activityInfo.name; // 获得该应用程序的启动Activity的name
-                    String appLabel = (String) reInfo.loadLabel(mPackageManager); // 获得应用程序的Label
-                    Drawable icon = reInfo.loadIcon(mPackageManager); // 获得应用程序图标
+                    // 获得该应用程序的启动Activity的name
+                    String activityName = reInfo.activityInfo.name;
+                    // 获得应用程序的Label
+                    String appLabel = (String) reInfo.loadLabel(mPackageManager);
+                    // 获得应用程序图标
+                    Drawable icon = reInfo.loadIcon(mPackageManager);
                     // 为应用程序的启动Activity 准备Intent
                     Intent launchIntent = new Intent();
                     launchIntent.setComponent(new ComponentName(pkgName,
@@ -297,12 +306,17 @@ public class AppListActivity extends AppCompatActivity implements AdapterView.On
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            mLodingLY.setVisibility(View.VISIBLE);
+            mLodingTV.setVisibility(View.VISIBLE);
+            mView.setDistance(100);
             mView.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            mLodingLY.setVisibility(View.GONE);
+            mLodingTV.setVisibility(View.GONE);
             mView.setVisibility(View.GONE);
             mAppInfoListAdapter.notifyDataSetChanged();
         }
