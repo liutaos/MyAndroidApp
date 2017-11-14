@@ -68,26 +68,7 @@ public class ImageListAdapter extends BaseAdapter {
         //TODO implement
         final Image mImage = (Image) object;
         holder.mHolderTv.setText(mImage.getTitle());
-        //Drawable mDbl = new BitmapDrawable(mImage.getThumbnail());
         holder.mHolderIv.setImageBitmap(mImage.getThumbnail());
-        //holder.mHolderIv.setImageDrawable(mDbl);
-        /*holder.mHolderTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
-                Uri pictureUri;
-                intent = new Intent();
-                File pictureFile = new File(mImage.getPath());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    pictureUri=new FileUriTools().getFileUriTools(context,pictureFile);
-                    intent.setDataAndType(pictureUri, "image/*");
-                } else {
-                    intent.setDataAndType(Uri.fromFile(pictureFile), "image/*");
-                }
-                context.startActivity(intent);
-            }
-        });*/
     }
 
     protected class ViewHolder {

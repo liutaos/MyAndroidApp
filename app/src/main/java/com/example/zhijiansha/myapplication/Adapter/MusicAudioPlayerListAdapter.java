@@ -20,8 +20,6 @@ import com.example.zhijiansha.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.zhijiansha.myapplication.R.mipmap.ic_launcher;
-
 /**
  * MUSIC AUDIO 列表适配器
  *
@@ -71,26 +69,7 @@ public class MusicAudioPlayerListAdapter extends BaseAdapter {
         //TODO implement
         final Audio mAudio = object;
         holder.mHolderTv.setText(mAudio.getTitle());
-        holder.mHolderIv.setImageDrawable(context.getResources().getDrawable(ic_launcher));
-        //旧的写法
-        /*holder.mHolderTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent;
-                Uri musicUri;
-                File audioFile = new File(mAudio.getPath());
-                intent = new Intent();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    musicUri = new FileUriTools().getFileUriTools(context, audioFile);
-                    intent.setDataAndType(musicUri, "audio/*");
-                } else {
-                    intent.setDataAndType(Uri.fromFile(audioFile), "audio/*");
-                }
-                context.startActivity(intent);
-            }
-        });*/
-
+        holder.mHolderIv.setImageDrawable(context.getResources().getDrawable(R.drawable.music_icon));
     }
 
     protected class ViewHolder {

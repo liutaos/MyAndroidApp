@@ -21,8 +21,6 @@ import com.example.zhijiansha.myapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.zhijiansha.myapplication.R.mipmap.ic_launcher;
-
 /**
  * VIDEO 列表适配器
  *
@@ -74,25 +72,7 @@ public class VideoPlayerListAdapter extends BaseAdapter {
         //TODO implement
         final Video mVideo = object;
         holder.mHolderTv.setText(mVideo.getTitle());
-        holder.mHolderIv.setImageDrawable(context.getResources().getDrawable(ic_launcher));
-        /*holder.mHolderTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                Uri videoUri;
-                File videoFile = new File(mVideo.getPath());
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    videoUri = new FileUriTools().getFileUriTools(context, videoFile);
-                    Log.i("liutao", "=====SET INTENT=====" + videoUri.toString());
-                    intent.setData(videoUri);
-                } else {
-                    intent.setData(Uri.fromFile(videoFile));
-                }
-                intent.setClass(context, VideoPlayerActivity.class);
-                context.startActivity(intent);
-            }
-        });*/
+        holder.mHolderIv.setImageDrawable(context.getResources().getDrawable(R.drawable.videos_icon));
     }
 
     protected class ViewHolder {

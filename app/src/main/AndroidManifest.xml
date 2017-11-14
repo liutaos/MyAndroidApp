@@ -58,11 +58,15 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
         <service
             android:name="com.example.zhijiansha.widget.services.MediaPlayerService"
             android:enabled="false"
             android:exported="false" />
 
+        <activity
+            android:name=".IconActivity"
+            android:theme="@style/MyStyle" />
     </application>
 
 </manifest>

@@ -15,6 +15,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -30,6 +31,7 @@ import com.example.zhijiansha.Entity.Video;
 import com.example.zhijiansha.myapplication.Adapter.ImageListAdapter;
 import com.example.zhijiansha.myapplication.Adapter.MusicAudioPlayerListAdapter;
 import com.example.zhijiansha.myapplication.Adapter.VideoPlayerListAdapter;
+import com.example.zhijiansha.myapplication.IconActivity;
 import com.example.zhijiansha.myapplication.R;
 import com.example.zhijiansha.myapplication.VideoPlayerActivity;
 import com.example.zhijiansha.tools.AudioProvider;
@@ -101,7 +103,7 @@ public class PlayerListActivity extends AppCompatActivity {
     private DataTask mDataTask;
     private MyView mView;// = new MyView(this);
     private LinearLayout mLodingLY;
-    private TextView mTitleTV,mLodingTV;
+    private TextView mTitleTV, mLodingTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,16 +162,21 @@ public class PlayerListActivity extends AppCompatActivity {
                 Intent intent = new Intent();
                 Uri fileUri;
                 File mFile;
+                Log.i("liutao", "=====mIntent.getAction()" + mIntent.getAction());
                 switch (mIntent.getAction()) {
                     case mActionImage:
                         mFile = new File(mImage.get(position).getPath());
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                             fileUri = new FileUriTools().getFileUriTools(getApplicationContext(), mFile);
-                            intent.setDataAndType(fileUri, "image/*");
+                            //intent.setDataAndType(fileUri, "image/*");
+                            intent.setData(fileUri);
                         } else {
-                            intent.setDataAndType(Uri.fromFile(mFile), "image/*");
-                        }
+                            intent.setData(Uri.fromFile(mFile));
+                            //intent.setDataAndType(Uri.fromFile(mFile), "image/*");
+                        }*/
+                        intent.setData(Uri.fromFile(mFile));
+                        intent.setClass(getApplication(), IconActivity.class);
                         break;
 
                     case mActionAudio:
@@ -316,6 +323,39 @@ public class PlayerListActivity extends AppCompatActivity {
                     break;
             }
             return null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        cleanData();
+    }
+    
+    /**
+    *清理缓存数据
+    *@author zhijiansha
+    *@time 2017-11-14 17:59
+    */
+    public void cleanData(){
+        Log.i("liutao", "====cleanData: ");
+        switch (mIntent.getAction()) {
+            case mActionImage:
+                mImage=null;
+                mImageProvider = null;
+                mImageAdapter = null;
+                break;
+            case mActionAudio:
+            case mActionMusic:
+                mAudio = null;
+                mAudioProvider = null;
+                mPlayerAdapter =null;
+                break;
+            case mActionVideo:
+                mVideo = null;
+                mVideoProvider = null;
+                mVideoPlayerAdapter = null;
+                break;
         }
     }
 }
