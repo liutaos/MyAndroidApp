@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 
 android {
-    signingConfigs {
+    /*signingConfigs {
         config {
             keyAlias 'zhijiansha_key'
             keyPassword 'liu911212'
             storeFile file('F:/work/keystore/zhijiansha_apk.jks')
             storePassword 'zhijiansha'
         }
-    }
+    }*/
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     defaultConfig {
@@ -18,7 +18,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        signingConfig signingConfigs.config
+        //signingConfig signingConfigs.config
     }
     buildTypes {
         release {
@@ -34,8 +34,8 @@ android {
     dexOptions {
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     productFlavors {
     }
@@ -49,6 +49,7 @@ dependencies {
         // if you don't use android.app.Fragment you can exclude support for them
         exclude module: "support-v13"
     }
+    //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.+'
